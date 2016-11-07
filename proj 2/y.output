@@ -1,0 +1,994 @@
+Terminals which are not used
+
+   FOR
+   PROC
+   GT
+   GTEQ
+   LT
+   LTEQ
+   NE
+   ANDAND
+   OROR
+   PLUS
+   MINUS
+   MULT
+   DIV
+   PIPE
+   INTPTR
+   CHARPTR
+   TRUE
+   FALSE
+   ABS
+   LTE
+   GTE
+   DIVIDE
+   TIMES
+
+
+State 52 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Statements $end
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    2 TypedParamList: Paramlist COLON Primitive
+    3               | Paramlist COLON Primitive SEMI_COLON TypedParamList
+
+    4 Paramlist: VARNAME COMMA Paramlist
+    5          | VARNAME
+
+    6 Return: RET VARNAME
+    7       | RET Primitive
+
+    8 Statements: Statements Statement SEMI_COLON
+    9           | Statement SEMI_COLON
+   10           | Proc
+
+   11 Statement: VAR VAR_DEC_LHS COLON Type Array
+   12          | VAR VAR_DEC_LHS COLON Type
+   13          | Lhs EQ Expr
+   14          | IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+   15          | WHILE LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE
+
+   16 VAR_DEC_LHS: VARNAME COMMA VAR_DEC_LHS
+   17            | VARNAME
+
+   18 Type: Primitive Array
+   19     | Primitive
+
+   20 Primitive: INT
+   21          | CHAR
+   22          | STRING
+   23          | BOOL
+
+   24 Array: LEFT_BRACKET INT RIGHT_BRACKET
+
+   25 Lhs: VARNAME
+   26    | VARNAME Array
+
+   27 Expr: VARNAME
+   28     | Primitive
+   29     | AND VARNAME
+   30     | XOR VARNAME
+   31     | VARNAME LEFT_PAREN Paramlist RIGHT_PAREN
+
+   32 CondExpr: Expr COND Expr
+
+   33 COND: EQEQ
+   34     | NOT EQ
+   35     | OR OR
+   36     | AND AND
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+PROCEDURE (258) 1
+BOOL (259) 23
+ELSE (260) 14
+IF (261) 14
+FOR (262)
+VAR (263) 11 12
+RET (264) 1 6 7
+WHILE (265) 15
+PROC (266)
+EQEQ (267) 33
+GT (268)
+GTEQ (269)
+LT (270)
+LTEQ (271)
+NE (272)
+ANDAND (273)
+OROR (274)
+NOT (275) 34
+PLUS (276)
+MINUS (277)
+MULT (278)
+DIV (279)
+AND (280) 29 36
+XOR (281) 30
+OR (282) 35
+PIPE (283)
+INTPTR (284)
+CHARPTR (285)
+TRUE (286)
+FALSE (287)
+VARNAME (288) 1 4 5 6 16 17 25 26 27 29 30 31
+INT (289) 20 24
+CHAR (290) 21
+STRING (291) 22
+SEMI_COLON (292) 3 8 9
+COLON (293) 2 3 11 12
+COMMA (294) 4 16
+ABS (295)
+LEFT_BRACE (296) 1 14 15
+RIGHT_BRACE (297) 1 14 15
+LEFT_PAREN (298) 1 14 15 31
+RIGHT_PAREN (299) 1 14 15 31
+LEFT_BRACKET (300) 24
+RIGHT_BRACKET (301) 24
+EQ (302) 13 34
+LTE (303)
+GTE (304)
+DIVIDE (305)
+TIMES (306)
+
+
+Nonterminals, with rules where they appear
+
+$accept (52)
+    on left: 0
+Proc (53)
+    on left: 1, on right: 10
+TypedParamList (54)
+    on left: 2 3, on right: 1 3
+Paramlist (55)
+    on left: 4 5, on right: 2 3 4 31
+Return (56)
+    on left: 6 7, on right: 1
+Statements (57)
+    on left: 8 9 10, on right: 0 1 8 14 15
+Statement (58)
+    on left: 11 12 13 14 15, on right: 8 9
+VAR_DEC_LHS (59)
+    on left: 16 17, on right: 11 12 16
+Type (60)
+    on left: 18 19, on right: 11 12
+Primitive (61)
+    on left: 20 21 22 23, on right: 1 2 3 7 18 19 28
+Array (62)
+    on left: 24, on right: 11 18 26
+Lhs (63)
+    on left: 25 26, on right: 13
+Expr (64)
+    on left: 27 28 29 30 31, on right: 13 32
+CondExpr (65)
+    on left: 32, on right: 14 15
+COND (66)
+    on left: 33 34 35 36, on right: 32
+
+
+state 0
+
+    0 $accept: . Statements $end
+
+    PROCEDURE  shift, and go to state 1
+    IF         shift, and go to state 2
+    VAR        shift, and go to state 3
+    WHILE      shift, and go to state 4
+    VARNAME    shift, and go to state 5
+
+    Proc        go to state 6
+    Statements  go to state 7
+    Statement   go to state 8
+    Lhs         go to state 9
+
+
+state 1
+
+    1 Proc: PROCEDURE . VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    VARNAME  shift, and go to state 10
+
+
+state 2
+
+   14 Statement: IF . LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    LEFT_PAREN  shift, and go to state 11
+
+
+state 3
+
+   11 Statement: VAR . VAR_DEC_LHS COLON Type Array
+   12          | VAR . VAR_DEC_LHS COLON Type
+
+    VARNAME  shift, and go to state 12
+
+    VAR_DEC_LHS  go to state 13
+
+
+state 4
+
+   15 Statement: WHILE . LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE
+
+    LEFT_PAREN  shift, and go to state 14
+
+
+state 5
+
+   25 Lhs: VARNAME .
+   26    | VARNAME . Array
+
+    LEFT_BRACKET  shift, and go to state 15
+
+    $default  reduce using rule 25 (Lhs)
+
+    Array  go to state 16
+
+
+state 6
+
+   10 Statements: Proc .
+
+    $default  reduce using rule 10 (Statements)
+
+
+state 7
+
+    0 $accept: Statements . $end
+    8 Statements: Statements . Statement SEMI_COLON
+
+    $end     shift, and go to state 17
+    IF       shift, and go to state 2
+    VAR      shift, and go to state 3
+    WHILE    shift, and go to state 4
+    VARNAME  shift, and go to state 5
+
+    Statement  go to state 18
+    Lhs        go to state 9
+
+
+state 8
+
+    9 Statements: Statement . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 19
+
+
+state 9
+
+   13 Statement: Lhs . EQ Expr
+
+    EQ  shift, and go to state 20
+
+
+state 10
+
+    1 Proc: PROCEDURE VARNAME . LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    LEFT_PAREN  shift, and go to state 21
+
+
+state 11
+
+   14 Statement: IF LEFT_PAREN . CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    BOOL     shift, and go to state 22
+    AND      shift, and go to state 23
+    XOR      shift, and go to state 24
+    VARNAME  shift, and go to state 25
+    INT      shift, and go to state 26
+    CHAR     shift, and go to state 27
+    STRING   shift, and go to state 28
+
+    Primitive  go to state 29
+    Expr       go to state 30
+    CondExpr   go to state 31
+
+
+state 12
+
+   16 VAR_DEC_LHS: VARNAME . COMMA VAR_DEC_LHS
+   17            | VARNAME .
+
+    COMMA  shift, and go to state 32
+
+    $default  reduce using rule 17 (VAR_DEC_LHS)
+
+
+state 13
+
+   11 Statement: VAR VAR_DEC_LHS . COLON Type Array
+   12          | VAR VAR_DEC_LHS . COLON Type
+
+    COLON  shift, and go to state 33
+
+
+state 14
+
+   15 Statement: WHILE LEFT_PAREN . CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE
+
+    BOOL     shift, and go to state 22
+    AND      shift, and go to state 23
+    XOR      shift, and go to state 24
+    VARNAME  shift, and go to state 25
+    INT      shift, and go to state 26
+    CHAR     shift, and go to state 27
+    STRING   shift, and go to state 28
+
+    Primitive  go to state 29
+    Expr       go to state 30
+    CondExpr   go to state 34
+
+
+state 15
+
+   24 Array: LEFT_BRACKET . INT RIGHT_BRACKET
+
+    INT  shift, and go to state 35
+
+
+state 16
+
+   26 Lhs: VARNAME Array .
+
+    $default  reduce using rule 26 (Lhs)
+
+
+state 17
+
+    0 $accept: Statements $end .
+
+    $default  accept
+
+
+state 18
+
+    8 Statements: Statements Statement . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 36
+
+
+state 19
+
+    9 Statements: Statement SEMI_COLON .
+
+    $default  reduce using rule 9 (Statements)
+
+
+state 20
+
+   13 Statement: Lhs EQ . Expr
+
+    BOOL     shift, and go to state 22
+    AND      shift, and go to state 23
+    XOR      shift, and go to state 24
+    VARNAME  shift, and go to state 25
+    INT      shift, and go to state 26
+    CHAR     shift, and go to state 27
+    STRING   shift, and go to state 28
+
+    Primitive  go to state 29
+    Expr       go to state 37
+
+
+state 21
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN . TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    VARNAME  shift, and go to state 38
+
+    TypedParamList  go to state 39
+    Paramlist       go to state 40
+
+
+state 22
+
+   23 Primitive: BOOL .
+
+    $default  reduce using rule 23 (Primitive)
+
+
+state 23
+
+   29 Expr: AND . VARNAME
+
+    VARNAME  shift, and go to state 41
+
+
+state 24
+
+   30 Expr: XOR . VARNAME
+
+    VARNAME  shift, and go to state 42
+
+
+state 25
+
+   27 Expr: VARNAME .
+   31     | VARNAME . LEFT_PAREN Paramlist RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 43
+
+    $default  reduce using rule 27 (Expr)
+
+
+state 26
+
+   20 Primitive: INT .
+
+    $default  reduce using rule 20 (Primitive)
+
+
+state 27
+
+   21 Primitive: CHAR .
+
+    $default  reduce using rule 21 (Primitive)
+
+
+state 28
+
+   22 Primitive: STRING .
+
+    $default  reduce using rule 22 (Primitive)
+
+
+state 29
+
+   28 Expr: Primitive .
+
+    $default  reduce using rule 28 (Expr)
+
+
+state 30
+
+   32 CondExpr: Expr . COND Expr
+
+    EQEQ  shift, and go to state 44
+    NOT   shift, and go to state 45
+    AND   shift, and go to state 46
+    OR    shift, and go to state 47
+
+    COND  go to state 48
+
+
+state 31
+
+   14 Statement: IF LEFT_PAREN CondExpr . RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    RIGHT_PAREN  shift, and go to state 49
+
+
+state 32
+
+   16 VAR_DEC_LHS: VARNAME COMMA . VAR_DEC_LHS
+
+    VARNAME  shift, and go to state 12
+
+    VAR_DEC_LHS  go to state 50
+
+
+state 33
+
+   11 Statement: VAR VAR_DEC_LHS COLON . Type Array
+   12          | VAR VAR_DEC_LHS COLON . Type
+
+    BOOL    shift, and go to state 22
+    INT     shift, and go to state 26
+    CHAR    shift, and go to state 27
+    STRING  shift, and go to state 28
+
+    Type       go to state 51
+    Primitive  go to state 52
+
+
+state 34
+
+   15 Statement: WHILE LEFT_PAREN CondExpr . RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE
+
+    RIGHT_PAREN  shift, and go to state 53
+
+
+state 35
+
+   24 Array: LEFT_BRACKET INT . RIGHT_BRACKET
+
+    RIGHT_BRACKET  shift, and go to state 54
+
+
+state 36
+
+    8 Statements: Statements Statement SEMI_COLON .
+
+    $default  reduce using rule 8 (Statements)
+
+
+state 37
+
+   13 Statement: Lhs EQ Expr .
+
+    $default  reduce using rule 13 (Statement)
+
+
+state 38
+
+    4 Paramlist: VARNAME . COMMA Paramlist
+    5          | VARNAME .
+
+    COMMA  shift, and go to state 55
+
+    $default  reduce using rule 5 (Paramlist)
+
+
+state 39
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList . RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    RIGHT_PAREN  shift, and go to state 56
+
+
+state 40
+
+    2 TypedParamList: Paramlist . COLON Primitive
+    3               | Paramlist . COLON Primitive SEMI_COLON TypedParamList
+
+    COLON  shift, and go to state 57
+
+
+state 41
+
+   29 Expr: AND VARNAME .
+
+    $default  reduce using rule 29 (Expr)
+
+
+state 42
+
+   30 Expr: XOR VARNAME .
+
+    $default  reduce using rule 30 (Expr)
+
+
+state 43
+
+   31 Expr: VARNAME LEFT_PAREN . Paramlist RIGHT_PAREN
+
+    VARNAME  shift, and go to state 38
+
+    Paramlist  go to state 58
+
+
+state 44
+
+   33 COND: EQEQ .
+
+    $default  reduce using rule 33 (COND)
+
+
+state 45
+
+   34 COND: NOT . EQ
+
+    EQ  shift, and go to state 59
+
+
+state 46
+
+   36 COND: AND . AND
+
+    AND  shift, and go to state 60
+
+
+state 47
+
+   35 COND: OR . OR
+
+    OR  shift, and go to state 61
+
+
+state 48
+
+   32 CondExpr: Expr COND . Expr
+
+    BOOL     shift, and go to state 22
+    AND      shift, and go to state 23
+    XOR      shift, and go to state 24
+    VARNAME  shift, and go to state 25
+    INT      shift, and go to state 26
+    CHAR     shift, and go to state 27
+    STRING   shift, and go to state 28
+
+    Primitive  go to state 29
+    Expr       go to state 62
+
+
+state 49
+
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN . LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    LEFT_BRACE  shift, and go to state 63
+
+
+state 50
+
+   16 VAR_DEC_LHS: VARNAME COMMA VAR_DEC_LHS .
+
+    $default  reduce using rule 16 (VAR_DEC_LHS)
+
+
+state 51
+
+   11 Statement: VAR VAR_DEC_LHS COLON Type . Array
+   12          | VAR VAR_DEC_LHS COLON Type .
+
+    LEFT_BRACKET  shift, and go to state 15
+
+    $default  reduce using rule 12 (Statement)
+
+    Array  go to state 64
+
+
+state 52
+
+   18 Type: Primitive . Array
+   19     | Primitive .
+
+    LEFT_BRACKET  shift, and go to state 15
+
+    LEFT_BRACKET  [reduce using rule 19 (Type)]
+    $default      reduce using rule 19 (Type)
+
+    Array  go to state 65
+
+
+state 53
+
+   15 Statement: WHILE LEFT_PAREN CondExpr RIGHT_PAREN . LEFT_BRACE Statements RIGHT_BRACE
+
+    LEFT_BRACE  shift, and go to state 66
+
+
+state 54
+
+   24 Array: LEFT_BRACKET INT RIGHT_BRACKET .
+
+    $default  reduce using rule 24 (Array)
+
+
+state 55
+
+    4 Paramlist: VARNAME COMMA . Paramlist
+
+    VARNAME  shift, and go to state 38
+
+    Paramlist  go to state 67
+
+
+state 56
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN . RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    RET  shift, and go to state 68
+
+
+state 57
+
+    2 TypedParamList: Paramlist COLON . Primitive
+    3               | Paramlist COLON . Primitive SEMI_COLON TypedParamList
+
+    BOOL    shift, and go to state 22
+    INT     shift, and go to state 26
+    CHAR    shift, and go to state 27
+    STRING  shift, and go to state 28
+
+    Primitive  go to state 69
+
+
+state 58
+
+   31 Expr: VARNAME LEFT_PAREN Paramlist . RIGHT_PAREN
+
+    RIGHT_PAREN  shift, and go to state 70
+
+
+state 59
+
+   34 COND: NOT EQ .
+
+    $default  reduce using rule 34 (COND)
+
+
+state 60
+
+   36 COND: AND AND .
+
+    $default  reduce using rule 36 (COND)
+
+
+state 61
+
+   35 COND: OR OR .
+
+    $default  reduce using rule 35 (COND)
+
+
+state 62
+
+   32 CondExpr: Expr COND Expr .
+
+    $default  reduce using rule 32 (CondExpr)
+
+
+state 63
+
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE . Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    PROCEDURE  shift, and go to state 1
+    IF         shift, and go to state 2
+    VAR        shift, and go to state 3
+    WHILE      shift, and go to state 4
+    VARNAME    shift, and go to state 5
+
+    Proc        go to state 6
+    Statements  go to state 71
+    Statement   go to state 8
+    Lhs         go to state 9
+
+
+state 64
+
+   11 Statement: VAR VAR_DEC_LHS COLON Type Array .
+
+    $default  reduce using rule 11 (Statement)
+
+
+state 65
+
+   18 Type: Primitive Array .
+
+    $default  reduce using rule 18 (Type)
+
+
+state 66
+
+   15 Statement: WHILE LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE . Statements RIGHT_BRACE
+
+    PROCEDURE  shift, and go to state 1
+    IF         shift, and go to state 2
+    VAR        shift, and go to state 3
+    WHILE      shift, and go to state 4
+    VARNAME    shift, and go to state 5
+
+    Proc        go to state 6
+    Statements  go to state 72
+    Statement   go to state 8
+    Lhs         go to state 9
+
+
+state 67
+
+    4 Paramlist: VARNAME COMMA Paramlist .
+
+    $default  reduce using rule 4 (Paramlist)
+
+
+state 68
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET . Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+
+    BOOL    shift, and go to state 22
+    INT     shift, and go to state 26
+    CHAR    shift, and go to state 27
+    STRING  shift, and go to state 28
+
+    Primitive  go to state 73
+
+
+state 69
+
+    2 TypedParamList: Paramlist COLON Primitive .
+    3               | Paramlist COLON Primitive . SEMI_COLON TypedParamList
+
+    SEMI_COLON  shift, and go to state 74
+
+    $default  reduce using rule 2 (TypedParamList)
+
+
+state 70
+
+   31 Expr: VARNAME LEFT_PAREN Paramlist RIGHT_PAREN .
+
+    $default  reduce using rule 31 (Expr)
+
+
+state 71
+
+    8 Statements: Statements . Statement SEMI_COLON
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements . RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    IF           shift, and go to state 2
+    VAR          shift, and go to state 3
+    WHILE        shift, and go to state 4
+    VARNAME      shift, and go to state 5
+    RIGHT_BRACE  shift, and go to state 75
+
+    Statement  go to state 18
+    Lhs        go to state 9
+
+
+state 72
+
+    8 Statements: Statements . Statement SEMI_COLON
+   15 Statement: WHILE LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements . RIGHT_BRACE
+
+    IF           shift, and go to state 2
+    VAR          shift, and go to state 3
+    WHILE        shift, and go to state 4
+    VARNAME      shift, and go to state 5
+    RIGHT_BRACE  shift, and go to state 76
+
+    Statement  go to state 18
+    Lhs        go to state 9
+
+
+state 73
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive . LEFT_BRACE Statements Return RIGHT_BRACE
+
+    LEFT_BRACE  shift, and go to state 77
+
+
+state 74
+
+    3 TypedParamList: Paramlist COLON Primitive SEMI_COLON . TypedParamList
+
+    VARNAME  shift, and go to state 38
+
+    TypedParamList  go to state 78
+    Paramlist       go to state 40
+
+
+state 75
+
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE . ELSE LEFT_BRACE Statements RIGHT_BRACE
+
+    ELSE  shift, and go to state 79
+
+
+state 76
+
+   15 Statement: WHILE LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE .
+
+    $default  reduce using rule 15 (Statement)
+
+
+state 77
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE . Statements Return RIGHT_BRACE
+
+    PROCEDURE  shift, and go to state 1
+    IF         shift, and go to state 2
+    VAR        shift, and go to state 3
+    WHILE      shift, and go to state 4
+    VARNAME    shift, and go to state 5
+
+    Proc        go to state 6
+    Statements  go to state 80
+    Statement   go to state 8
+    Lhs         go to state 9
+
+
+state 78
+
+    3 TypedParamList: Paramlist COLON Primitive SEMI_COLON TypedParamList .
+
+    $default  reduce using rule 3 (TypedParamList)
+
+
+state 79
+
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE . LEFT_BRACE Statements RIGHT_BRACE
+
+    LEFT_BRACE  shift, and go to state 81
+
+
+state 80
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements . Return RIGHT_BRACE
+    8 Statements: Statements . Statement SEMI_COLON
+
+    IF       shift, and go to state 2
+    VAR      shift, and go to state 3
+    RET      shift, and go to state 82
+    WHILE    shift, and go to state 4
+    VARNAME  shift, and go to state 5
+
+    Return     go to state 83
+    Statement  go to state 18
+    Lhs        go to state 9
+
+
+state 81
+
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE . Statements RIGHT_BRACE
+
+    PROCEDURE  shift, and go to state 1
+    IF         shift, and go to state 2
+    VAR        shift, and go to state 3
+    WHILE      shift, and go to state 4
+    VARNAME    shift, and go to state 5
+
+    Proc        go to state 6
+    Statements  go to state 84
+    Statement   go to state 8
+    Lhs         go to state 9
+
+
+state 82
+
+    6 Return: RET . VARNAME
+    7       | RET . Primitive
+
+    BOOL     shift, and go to state 22
+    VARNAME  shift, and go to state 85
+    INT      shift, and go to state 26
+    CHAR     shift, and go to state 27
+    STRING   shift, and go to state 28
+
+    Primitive  go to state 86
+
+
+state 83
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return . RIGHT_BRACE
+
+    RIGHT_BRACE  shift, and go to state 87
+
+
+state 84
+
+    8 Statements: Statements . Statement SEMI_COLON
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements . RIGHT_BRACE
+
+    IF           shift, and go to state 2
+    VAR          shift, and go to state 3
+    WHILE        shift, and go to state 4
+    VARNAME      shift, and go to state 5
+    RIGHT_BRACE  shift, and go to state 88
+
+    Statement  go to state 18
+    Lhs        go to state 9
+
+
+state 85
+
+    6 Return: RET VARNAME .
+
+    $default  reduce using rule 6 (Return)
+
+
+state 86
+
+    7 Return: RET Primitive .
+
+    $default  reduce using rule 7 (Return)
+
+
+state 87
+
+    1 Proc: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE .
+
+    $default  reduce using rule 1 (Proc)
+
+
+state 88
+
+   14 Statement: IF LEFT_PAREN CondExpr RIGHT_PAREN LEFT_BRACE Statements RIGHT_BRACE ELSE LEFT_BRACE Statements RIGHT_BRACE .
+
+    $default  reduce using rule 14 (Statement)

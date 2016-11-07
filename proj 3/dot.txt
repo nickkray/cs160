@@ -1,0 +1,101 @@
+procedure
+(){var
+var
+}digraph G { page="8.5,11"; size="7.5, 10"; 
+"0" -> "1"
+"1" [label="ProgramImpl"]
+"1" -> "2"
+"2" [label="ProcImpl"]
+"2" -> "3"
+"3" [label="SymName\n\"Main\""]
+"2" -> "4"
+"4" [label="DeclImpl"]
+"4" -> "5"
+"5" [label="SymName\n\"x\""]
+"4" -> "6"
+"6" [label="TInteger"]
+"2" -> "7"
+"7" [label="DeclImpl"]
+"7" -> "8"
+"8" [label="SymName\n\"y\""]
+"7" -> "9"
+"9" [label="TCharacter"]
+"2" -> "10"
+"10" [label="TBoolean"]
+"2" -> "11"
+"11" [label="ProcedureBlockImpl"]
+"11" -> "12"
+"12" [label="DeclImpl"]
+"12" -> "13"
+"13" [label="SymName\n\"z\""]
+"12" -> "14"
+"14" [label="SymName\n\"tr\""]
+"12" -> "15"
+"15" [label="TString"]
+"15" -> "16"
+"16" [label="Primitive\n7"]
+"11" -> "17"
+"17" [label="DeclImpl"]
+"17" -> "18"
+"18" [label="SymName\n\"c\""]
+"17" -> "19"
+"19" [label="TCharacter"]
+"11" -> "20"
+"20" [label="Assignment"]
+"20" -> "21"
+"21" [label="Variable"]
+"21" -> "22"
+"22" [label="SymName\n\"c\""]
+"20" -> "23"
+"23" [label="CharLit"]
+"23" -> "24"
+"24" [label="Primitive\n120"]
+"11" -> "25"
+"25" [label="StringAssignment"]
+"25" -> "26"
+"26" [label="Variable"]
+"26" -> "27"
+"27" [label="SymName\n\"z\""]
+"25" -> "28"
+"28" [label="StringPrimitive\n\""hello world"\""]
+"11" -> "29"
+"29" [label="StringAssignment"]
+"29" -> "30"
+"30" [label="Variable"]
+"30" -> "31"
+"31" [label="SymName\n\"tr\""]
+"29" -> "32"
+"32" [label="StringPrimitive\n\"""\""]
+"11" -> "33"
+"33" [label="Assignment"]
+"33" -> "34"
+"34" [label="ArrayElement"]
+"34" -> "35"
+"35" [label="SymName\n\"z\""]
+"34" -> "36"
+"36" [label="Minus"]
+"36" -> "37"
+"37" [label="IntLit"]
+"37" -> "38"
+"38" [label="Primitive\n3"]
+"36" -> "39"
+"39" [label="IntLit"]
+"39" -> "40"
+"40" [label="Primitive\n2"]
+"33" -> "41"
+"41" [label="Ident"]
+"41" -> "42"
+"42" [label="SymName\n\"c\""]
+"11" -> "43"
+"43" [label="Return"]
+"43" -> "44"
+"44" [label="Noteq"]
+"44" -> "45"
+"45" [label="CharLit"]
+"45" -> "46"
+"46" [label="Primitive\n100"]
+"44" -> "47"
+"47" [label="CharLit"]
+"47" -> "48"
+"48" [label="Primitive\n99"]
+}

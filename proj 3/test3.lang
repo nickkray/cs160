@@ -1,0 +1,17 @@
+procedure foo(x: integer) return integer
+{
+    return 2*x;
+}
+
+procedure Main() return integer
+{
+    var a : integer;
+    {
+    }
+    a = foo(3); 
+    {
+	var b: integer;
+	b = 3*a+2;
+    }
+    return 0;
+}

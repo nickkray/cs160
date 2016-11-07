@@ -1,0 +1,86 @@
+procedure foo() return integer
+{
+   var x: integer;
+   {
+   var y : integer;
+   x = 1;
+
+   y = 2;
+     {
+     x = 2;
+     }
+     /%kldsfj%/
+     /%asdfklasdfkl
+     asfkljasfkj%/
+   y = 3;
+   }
+return 0;
+}
+
+procedure foo() return integer
+{
+    {
+        {}   /% empty code blocks are okay, although not very useful %/
+    }
+    return 0;
+}
+procedure foo(i, j, k : integer) return integer
+{
+    procedure square(t : integer) /% procedure declarations %/ return integer
+        {
+        var temp : integer;
+        temp = t* t;
+        return 0;
+        }
+
+    var total : integer;          /% variable declarations %/
+
+    total = 1;                    /% statements %/
+    return 0;
+}
+procedure foo(i, j, k : integer; l, m, n : boolean) return integer { return 0; }
+procedure fee(a, b : integer) return integer { return 0; }
+procedure fei(a, b, c : integer; d, e, f : boolean; g, h : integer) return integer { return 0; }
+procedure foo() return integer { return 0; }
+procedure foo_2() return integer { return 0; }
+procedure f234() return integer { return 0;}
+procedure foo(i, j, k : integer) return integer
+{
+    procedure fee(l, m, n : integer) return boolean
+        {
+        return true;
+        }
+    return 0;
+}
+procedure Main() return integer{
+var a, b : string[100];
+var c : char;
+var i: integer;
+var i : integer;
+var m, n : boolean;
+var c : char;
+var s : string[20];
+c = 'e';
+a[19] = 'f';
+a[4+2] = 'g';
+b = a;
+b[3] = c;
+a = "test";   /% basically equivalent to a[0] = 't'; a[1] = 'e'; a[2] = 's'; a[3] = 't'; a[4] = '\0'; %/
+i = |s|;      /% this assigns 100 to variable i, since the length operator returns the size of the character array %/
+x=5;
+x=2;
+x=5 + 1;
+x=3 * 5;
+x=5 + (6);
+x=5 + (4 - 6);
+x=5 + 3 * 2;
+x=5 - (4 - 6);
+x=5 - 4 / 6;
+x=5 - 4 - 6;
+x=(5 / (6 - 4));
+x= true;
+x= !i;
+x=&i;
+x=^i;
+return x;
+}

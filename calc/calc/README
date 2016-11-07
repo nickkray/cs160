@@ -1,0 +1,28 @@
+============== README CS160 Project 1 ===================
+
+My calculator uses the following grammar to create a parse tree:
+
+Start symbol: List
+
+List -> Expr . ListP
+ListP -> eof
+| List
+Expr -> Term ExprP
+ExprP -> + Term ExprP
+|- Term ExprP
+|e
+Term -> Fact TermP
+TermP -> * Fact TermP
+| % Fact TermP
+| e
+Fact ->  ( Expr )
+|	'n'
+
+
+The inclusion of ListP is to not accept eof as a valid first character since that is not a list. The rest of the grammar presents parentheticals as the highest precedence, then %/*, and finally +/-.
+
+The scanner works by grabbing the next char, skipping those that are spaces or new lines (but incrementing for newlines), and storing each token so that the parser can grab it.
+
+The parser then grabs the next symbol and uses recursive functions to identify what nonterminal it is at and finally consume the token when appropriate. It can thus traverse down and back up the tree creating the parsetree by calling it appropriately. If the next token is unexpected or not within the stack, the parser can identify this by triggering an error. It can identify either a mismatch or syntax error.
+
+Since full calculation is not relevant here, I have not checked for large INT capacity as well as negative numbers. The syntax parsing is correct for my testing.

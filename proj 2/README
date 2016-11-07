@@ -1,0 +1,9 @@
+Project 2 README
+
+In this project, I used the lexer to parse for various tokens and used YACC to translate those tokens into nonterminals that designate larger code blocks. I used nonterminals to seperate each line into pr
+ocedures, nested code blocks (e.g. IF/WHILE/IF-ELSE), and finally statements. Statements could accept either literals, expressions, or functions mostly dependent on context. Since this is only the parser,
+ the evaluation result is not considered. There are limitations to this such as &(x) being illegal since it is an expression although logically there should not be an issue.
+
+The structure is also considered in that it looks for procedures, followed by declarations, and finally statements. Statements also include IF/WHILE blocks / code blocks / assertions and this structure is to match with typical C-style code blocks which would have this similarly structured logic. 
+
+Errors should arise in the “unexpected TOKEN” form since the parser is catching it. Special errors include dangling comments, etc.

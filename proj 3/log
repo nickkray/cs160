@@ -1,0 +1,1 @@
+g++ -g -Wno-deprecated --std=c++11 -o parser.o -c parser.cpp

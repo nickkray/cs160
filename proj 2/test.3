@@ -1,0 +1,10 @@
+procedure foo() return integer
+{
+    return 0;
+}
+ 
+procedure Main() return integer
+{
+    foo();   /% ERROR, foo's return value is not assigned to a variable %/
+    return 0;
+}

@@ -1,0 +1,11 @@
+procedure Main(x : integer; y : char) return boolean
+{
+	var z,tr: string[7];
+	var c: char;
+
+	c = 'x';
+	z = "hello world";
+	tr = "";
+	z[3-2] = c;	
+	return 'd' != 'c';
+}

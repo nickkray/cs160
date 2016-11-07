@@ -1,0 +1,2278 @@
+Terminals which are not used
+
+   FOR
+   GTEQ
+   OROR
+   ABS
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: Program Proc
+    2        | Proc
+
+    3 Proc: Declaration LEFT_BRACE Structure Return RIGHT_BRACE
+
+    4 Return: RET Expr SEMI_COLON
+
+    5 Structure: Procs VarDecs Statements
+    6          | Procs VarDecs
+
+    7 Procs: Proc Procs
+    8      | /* empty */
+
+    9 VarDecs: VAR VAR_DEC_LHS COLON StringType SEMI_COLON VarDecs
+   10        | /* empty */
+
+   11 Declaration: PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN RET Primitive
+   12            | PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive
+
+   13 Statements: Statements Statement SEMI_COLON
+   14           | Statement SEMI_COLON
+   15           | Statements IF_WHILE
+   16           | Statements CodeBlock
+   17           | IF_WHILE
+   18           | CodeBlock
+
+   19 Statement: VARNAME ArrayIndex EQ Expr
+   20          | VARNAME ArrayIndex EQ CHAR
+   21          | VARNAME EQ STRING
+   22          | VARNAME EQ CHAR
+   23          | VARNAME EQ Expr
+   24          | VARNAME LEFT_PAREN FuncCall RIGHT_PAREN
+   25          | VARNAME LEFT_PAREN RIGHT_PAREN
+   26          | XOR VARNAME EQ Expr
+
+   27 IF_WHILE: IF LEFT_PAREN Expr RIGHT_PAREN CodeBlock Optional_Else
+   28         | WHILE LEFT_PAREN Expr RIGHT_PAREN CodeBlock
+
+   29 Optional_Else: ELSE CodeBlock
+   30              | /* empty */
+
+   31 CodeBlock: LEFT_BRACE VarDecs Statements RIGHT_BRACE
+   32          | LEFT_BRACE RIGHT_BRACE
+
+   33 VAR_DEC_LHS: VARNAME COMMA VAR_DEC_LHS
+   34            | VARNAME
+
+   35 TypedParamList: Paramlist COLON Primitive
+   36               | Paramlist COLON Primitive SEMI_COLON TypedParamList
+
+   37 Paramlist: VARNAME COMMA Paramlist
+   38          | VARNAME
+
+   39 StringType: Primitive
+   40           | _STRING LEFT_BRACKET INT RIGHT_BRACKET
+
+   41 Primitive: _INT
+   42          | _CHAR
+   43          | _CHARPTR
+   44          | _INTPTR
+   45          | _BOOL
+
+   46 ArrayIndex: LEFT_BRACKET Expr RIGHT_BRACKET
+
+   47 Expr: Value
+   48     | Expr EQEQ Expr
+   49     | Expr GT Expr
+   50     | Expr LT Expr
+   51     | Expr LTEQ Expr
+   52     | Expr OR Expr
+   53     | Expr NE Expr
+   54     | Expr ANDAND Expr
+   55     | Expr PLUS Expr
+   56     | Expr MINUS Expr
+   57     | Expr MULT Expr
+   58     | Expr DIV Expr
+   59     | PIPE Expr PIPE
+   60     | XOR LEFT_PAREN Expr RIGHT_PAREN
+   61     | NOT Expr
+   62     | MINUS Expr
+   63     | LEFT_PAREN Expr RIGHT_PAREN
+
+   64 Value: VARNAME
+   65      | AND VARNAME ArrayIndex
+   66      | AND VARNAME
+   67      | INT
+   68      | TRUE
+   69      | FALSE
+   70      | NULLTOKEN
+   71      | XOR VARNAME
+   72      | VARNAME LEFT_BRACKET Expr RIGHT_BRACKET
+
+   73 FuncCall: Expr COMMA FuncCall
+   74         | Expr
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+PROCEDURE (258) 11 12
+ELSE (259) 29
+IF (260) 27
+FOR (261)
+VAR (262) 9
+RET (263) 4 11 12
+WHILE (264) 28
+EQEQ (265) 48
+GT (266) 49
+GTEQ (267)
+LT (268) 50
+LTEQ (269) 51
+NE (270) 53
+ANDAND (271) 54
+OROR (272)
+NOT (273) 61
+PLUS (274) 55
+MINUS (275) 56 62
+MULT (276) 57
+DIV (277) 58
+AND (278) 65 66
+XOR (279) 26 60 71
+OR (280) 52
+PIPE (281) 59
+_INTPTR (282) 44
+_CHARPTR (283) 43
+_BOOL (284) 45
+_INT (285) 41
+_CHAR (286) 42
+_STRING (287) 40
+TRUE (288) 68
+FALSE (289) 69
+NULLTOKEN (290) 70
+VARNAME (291) 11 12 19 20 21 22 23 24 25 26 33 34 37 38 64 65 66 71
+    72
+INT (292) 40 67
+CHAR (293) 20 22
+STRING (294) 21
+SEMI_COLON (295) 4 9 13 14 36
+COLON (296) 9 35 36
+COMMA (297) 33 37 73
+ABS (298)
+LEFT_BRACE (299) 3 31 32
+RIGHT_BRACE (300) 3 31 32
+LEFT_PAREN (301) 11 12 24 25 27 28 60 63
+RIGHT_PAREN (302) 11 12 24 25 27 28 60 63
+LEFT_BRACKET (303) 40 46 72
+RIGHT_BRACKET (304) 40 46 72
+EQ (305) 19 20 21 22 23 26
+
+
+Nonterminals, with rules where they appear
+
+$accept (51)
+    on left: 0
+Program (52)
+    on left: 1 2, on right: 0 1
+Proc (53)
+    on left: 3, on right: 1 2 7
+Return (54)
+    on left: 4, on right: 3
+Structure (55)
+    on left: 5 6, on right: 3
+Procs (56)
+    on left: 7 8, on right: 5 6 7
+VarDecs (57)
+    on left: 9 10, on right: 5 6 9 31
+Declaration (58)
+    on left: 11 12, on right: 3
+Statements (59)
+    on left: 13 14 15 16 17 18, on right: 5 13 15 16 31
+Statement (60)
+    on left: 19 20 21 22 23 24 25 26, on right: 13 14
+IF_WHILE (61)
+    on left: 27 28, on right: 15 17
+Optional_Else (62)
+    on left: 29 30, on right: 27
+CodeBlock (63)
+    on left: 31 32, on right: 16 18 27 28 29
+VAR_DEC_LHS (64)
+    on left: 33 34, on right: 9 33
+TypedParamList (65)
+    on left: 35 36, on right: 12 36
+Paramlist (66)
+    on left: 37 38, on right: 35 36 37
+StringType (67)
+    on left: 39 40, on right: 9
+Primitive (68)
+    on left: 41 42 43 44 45, on right: 11 12 35 36 39
+ArrayIndex (69)
+    on left: 46, on right: 19 20 65
+Expr (70)
+    on left: 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63,
+    on right: 4 19 23 26 27 28 46 48 49 50 51 52 53 54 55 56 57 58
+    59 60 61 62 63 72 73 74
+Value (71)
+    on left: 64 65 66 67 68 69 70 71 72, on right: 47
+FuncCall (72)
+    on left: 73 74, on right: 24 73
+
+
+state 0
+
+    0 $accept: . Program $end
+
+    PROCEDURE  shift, and go to state 1
+
+    Program      go to state 2
+    Proc         go to state 3
+    Declaration  go to state 4
+
+
+state 1
+
+   11 Declaration: PROCEDURE . VARNAME LEFT_PAREN RIGHT_PAREN RET Primitive
+   12            | PROCEDURE . VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive
+
+    VARNAME  shift, and go to state 5
+
+
+state 2
+
+    0 $accept: Program . $end
+    1 Program: Program . Proc
+
+    $end       shift, and go to state 6
+    PROCEDURE  shift, and go to state 1
+
+    Proc         go to state 7
+    Declaration  go to state 4
+
+
+state 3
+
+    2 Program: Proc .
+
+    $default  reduce using rule 2 (Program)
+
+
+state 4
+
+    3 Proc: Declaration . LEFT_BRACE Structure Return RIGHT_BRACE
+
+    LEFT_BRACE  shift, and go to state 8
+
+
+state 5
+
+   11 Declaration: PROCEDURE VARNAME . LEFT_PAREN RIGHT_PAREN RET Primitive
+   12            | PROCEDURE VARNAME . LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive
+
+    LEFT_PAREN  shift, and go to state 9
+
+
+state 6
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+state 7
+
+    1 Program: Program Proc .
+
+    $default  reduce using rule 1 (Program)
+
+
+state 8
+
+    3 Proc: Declaration LEFT_BRACE . Structure Return RIGHT_BRACE
+
+    PROCEDURE  shift, and go to state 1
+
+    $default  reduce using rule 8 (Procs)
+
+    Proc         go to state 10
+    Structure    go to state 11
+    Procs        go to state 12
+    Declaration  go to state 4
+
+
+state 9
+
+   11 Declaration: PROCEDURE VARNAME LEFT_PAREN . RIGHT_PAREN RET Primitive
+   12            | PROCEDURE VARNAME LEFT_PAREN . TypedParamList RIGHT_PAREN RET Primitive
+
+    VARNAME      shift, and go to state 13
+    RIGHT_PAREN  shift, and go to state 14
+
+    TypedParamList  go to state 15
+    Paramlist       go to state 16
+
+
+state 10
+
+    7 Procs: Proc . Procs
+
+    PROCEDURE  shift, and go to state 1
+
+    $default  reduce using rule 8 (Procs)
+
+    Proc         go to state 10
+    Procs        go to state 17
+    Declaration  go to state 4
+
+
+state 11
+
+    3 Proc: Declaration LEFT_BRACE Structure . Return RIGHT_BRACE
+
+    RET  shift, and go to state 18
+
+    Return  go to state 19
+
+
+state 12
+
+    5 Structure: Procs . VarDecs Statements
+    6          | Procs . VarDecs
+
+    VAR  shift, and go to state 20
+
+    $default  reduce using rule 10 (VarDecs)
+
+    VarDecs  go to state 21
+
+
+state 13
+
+   37 Paramlist: VARNAME . COMMA Paramlist
+   38          | VARNAME .
+
+    COMMA  shift, and go to state 22
+
+    $default  reduce using rule 38 (Paramlist)
+
+
+state 14
+
+   11 Declaration: PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN . RET Primitive
+
+    RET  shift, and go to state 23
+
+
+state 15
+
+   12 Declaration: PROCEDURE VARNAME LEFT_PAREN TypedParamList . RIGHT_PAREN RET Primitive
+
+    RIGHT_PAREN  shift, and go to state 24
+
+
+state 16
+
+   35 TypedParamList: Paramlist . COLON Primitive
+   36               | Paramlist . COLON Primitive SEMI_COLON TypedParamList
+
+    COLON  shift, and go to state 25
+
+
+state 17
+
+    7 Procs: Proc Procs .
+
+    $default  reduce using rule 7 (Procs)
+
+
+state 18
+
+    4 Return: RET . Expr SEMI_COLON
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 37
+    Value  go to state 38
+
+
+state 19
+
+    3 Proc: Declaration LEFT_BRACE Structure Return . RIGHT_BRACE
+
+    RIGHT_BRACE  shift, and go to state 39
+
+
+state 20
+
+    9 VarDecs: VAR . VAR_DEC_LHS COLON StringType SEMI_COLON VarDecs
+
+    VARNAME  shift, and go to state 40
+
+    VAR_DEC_LHS  go to state 41
+
+
+state 21
+
+    5 Structure: Procs VarDecs . Statements
+    6          | Procs VarDecs .
+
+    IF          shift, and go to state 42
+    WHILE       shift, and go to state 43
+    XOR         shift, and go to state 44
+    VARNAME     shift, and go to state 45
+    LEFT_BRACE  shift, and go to state 46
+
+    $default  reduce using rule 6 (Structure)
+
+    Statements  go to state 47
+    Statement   go to state 48
+    IF_WHILE    go to state 49
+    CodeBlock   go to state 50
+
+
+state 22
+
+   37 Paramlist: VARNAME COMMA . Paramlist
+
+    VARNAME  shift, and go to state 13
+
+    Paramlist  go to state 51
+
+
+state 23
+
+   11 Declaration: PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN RET . Primitive
+
+    _INTPTR   shift, and go to state 52
+    _CHARPTR  shift, and go to state 53
+    _BOOL     shift, and go to state 54
+    _INT      shift, and go to state 55
+    _CHAR     shift, and go to state 56
+
+    Primitive  go to state 57
+
+
+state 24
+
+   12 Declaration: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN . RET Primitive
+
+    RET  shift, and go to state 58
+
+
+state 25
+
+   35 TypedParamList: Paramlist COLON . Primitive
+   36               | Paramlist COLON . Primitive SEMI_COLON TypedParamList
+
+    _INTPTR   shift, and go to state 52
+    _CHARPTR  shift, and go to state 53
+    _BOOL     shift, and go to state 54
+    _INT      shift, and go to state 55
+    _CHAR     shift, and go to state 56
+
+    Primitive  go to state 59
+
+
+state 26
+
+   61 Expr: NOT . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 60
+    Value  go to state 38
+
+
+state 27
+
+   62 Expr: MINUS . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 61
+    Value  go to state 38
+
+
+state 28
+
+   65 Value: AND . VARNAME ArrayIndex
+   66      | AND . VARNAME
+
+    VARNAME  shift, and go to state 62
+
+
+state 29
+
+   60 Expr: XOR . LEFT_PAREN Expr RIGHT_PAREN
+   71 Value: XOR . VARNAME
+
+    VARNAME     shift, and go to state 63
+    LEFT_PAREN  shift, and go to state 64
+
+
+state 30
+
+   59 Expr: PIPE . Expr PIPE
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 65
+    Value  go to state 38
+
+
+state 31
+
+   68 Value: TRUE .
+
+    $default  reduce using rule 68 (Value)
+
+
+state 32
+
+   69 Value: FALSE .
+
+    $default  reduce using rule 69 (Value)
+
+
+state 33
+
+   70 Value: NULLTOKEN .
+
+    $default  reduce using rule 70 (Value)
+
+
+state 34
+
+   64 Value: VARNAME .
+   72      | VARNAME . LEFT_BRACKET Expr RIGHT_BRACKET
+
+    LEFT_BRACKET  shift, and go to state 66
+
+    $default  reduce using rule 64 (Value)
+
+
+state 35
+
+   67 Value: INT .
+
+    $default  reduce using rule 67 (Value)
+
+
+state 36
+
+   63 Expr: LEFT_PAREN . Expr RIGHT_PAREN
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 67
+    Value  go to state 38
+
+
+state 37
+
+    4 Return: RET Expr . SEMI_COLON
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ        shift, and go to state 68
+    GT          shift, and go to state 69
+    LT          shift, and go to state 70
+    LTEQ        shift, and go to state 71
+    NE          shift, and go to state 72
+    ANDAND      shift, and go to state 73
+    PLUS        shift, and go to state 74
+    MINUS       shift, and go to state 75
+    MULT        shift, and go to state 76
+    DIV         shift, and go to state 77
+    OR          shift, and go to state 78
+    SEMI_COLON  shift, and go to state 79
+
+
+state 38
+
+   47 Expr: Value .
+
+    $default  reduce using rule 47 (Expr)
+
+
+state 39
+
+    3 Proc: Declaration LEFT_BRACE Structure Return RIGHT_BRACE .
+
+    $default  reduce using rule 3 (Proc)
+
+
+state 40
+
+   33 VAR_DEC_LHS: VARNAME . COMMA VAR_DEC_LHS
+   34            | VARNAME .
+
+    COMMA  shift, and go to state 80
+
+    $default  reduce using rule 34 (VAR_DEC_LHS)
+
+
+state 41
+
+    9 VarDecs: VAR VAR_DEC_LHS . COLON StringType SEMI_COLON VarDecs
+
+    COLON  shift, and go to state 81
+
+
+state 42
+
+   27 IF_WHILE: IF . LEFT_PAREN Expr RIGHT_PAREN CodeBlock Optional_Else
+
+    LEFT_PAREN  shift, and go to state 82
+
+
+state 43
+
+   28 IF_WHILE: WHILE . LEFT_PAREN Expr RIGHT_PAREN CodeBlock
+
+    LEFT_PAREN  shift, and go to state 83
+
+
+state 44
+
+   26 Statement: XOR . VARNAME EQ Expr
+
+    VARNAME  shift, and go to state 84
+
+
+state 45
+
+   19 Statement: VARNAME . ArrayIndex EQ Expr
+   20          | VARNAME . ArrayIndex EQ CHAR
+   21          | VARNAME . EQ STRING
+   22          | VARNAME . EQ CHAR
+   23          | VARNAME . EQ Expr
+   24          | VARNAME . LEFT_PAREN FuncCall RIGHT_PAREN
+   25          | VARNAME . LEFT_PAREN RIGHT_PAREN
+
+    LEFT_PAREN    shift, and go to state 85
+    LEFT_BRACKET  shift, and go to state 86
+    EQ            shift, and go to state 87
+
+    ArrayIndex  go to state 88
+
+
+state 46
+
+   31 CodeBlock: LEFT_BRACE . VarDecs Statements RIGHT_BRACE
+   32          | LEFT_BRACE . RIGHT_BRACE
+
+    VAR          shift, and go to state 20
+    RIGHT_BRACE  shift, and go to state 89
+
+    $default  reduce using rule 10 (VarDecs)
+
+    VarDecs  go to state 90
+
+
+state 47
+
+    5 Structure: Procs VarDecs Statements .
+   13 Statements: Statements . Statement SEMI_COLON
+   15           | Statements . IF_WHILE
+   16           | Statements . CodeBlock
+
+    IF          shift, and go to state 42
+    WHILE       shift, and go to state 43
+    XOR         shift, and go to state 44
+    VARNAME     shift, and go to state 45
+    LEFT_BRACE  shift, and go to state 46
+
+    $default  reduce using rule 5 (Structure)
+
+    Statement  go to state 91
+    IF_WHILE   go to state 92
+    CodeBlock  go to state 93
+
+
+state 48
+
+   14 Statements: Statement . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 94
+
+
+state 49
+
+   17 Statements: IF_WHILE .
+
+    $default  reduce using rule 17 (Statements)
+
+
+state 50
+
+   18 Statements: CodeBlock .
+
+    $default  reduce using rule 18 (Statements)
+
+
+state 51
+
+   37 Paramlist: VARNAME COMMA Paramlist .
+
+    $default  reduce using rule 37 (Paramlist)
+
+
+state 52
+
+   44 Primitive: _INTPTR .
+
+    $default  reduce using rule 44 (Primitive)
+
+
+state 53
+
+   43 Primitive: _CHARPTR .
+
+    $default  reduce using rule 43 (Primitive)
+
+
+state 54
+
+   45 Primitive: _BOOL .
+
+    $default  reduce using rule 45 (Primitive)
+
+
+state 55
+
+   41 Primitive: _INT .
+
+    $default  reduce using rule 41 (Primitive)
+
+
+state 56
+
+   42 Primitive: _CHAR .
+
+    $default  reduce using rule 42 (Primitive)
+
+
+state 57
+
+   11 Declaration: PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN RET Primitive .
+
+    $default  reduce using rule 11 (Declaration)
+
+
+state 58
+
+   12 Declaration: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET . Primitive
+
+    _INTPTR   shift, and go to state 52
+    _CHARPTR  shift, and go to state 53
+    _BOOL     shift, and go to state 54
+    _INT      shift, and go to state 55
+    _CHAR     shift, and go to state 56
+
+    Primitive  go to state 95
+
+
+state 59
+
+   35 TypedParamList: Paramlist COLON Primitive .
+   36               | Paramlist COLON Primitive . SEMI_COLON TypedParamList
+
+    SEMI_COLON  shift, and go to state 96
+
+    $default  reduce using rule 35 (TypedParamList)
+
+
+state 60
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   61     | NOT Expr .
+
+    OR  shift, and go to state 78
+
+    $default  reduce using rule 61 (Expr)
+
+
+state 61
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   62     | MINUS Expr .
+
+    MULT  shift, and go to state 76
+    DIV   shift, and go to state 77
+    OR    shift, and go to state 78
+
+    $default  reduce using rule 62 (Expr)
+
+
+state 62
+
+   65 Value: AND VARNAME . ArrayIndex
+   66      | AND VARNAME .
+
+    LEFT_BRACKET  shift, and go to state 86
+
+    $default  reduce using rule 66 (Value)
+
+    ArrayIndex  go to state 97
+
+
+state 63
+
+   71 Value: XOR VARNAME .
+
+    $default  reduce using rule 71 (Value)
+
+
+state 64
+
+   60 Expr: XOR LEFT_PAREN . Expr RIGHT_PAREN
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 98
+    Value  go to state 38
+
+
+state 65
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   59     | PIPE Expr . PIPE
+
+    EQEQ    shift, and go to state 68
+    GT      shift, and go to state 69
+    LT      shift, and go to state 70
+    LTEQ    shift, and go to state 71
+    NE      shift, and go to state 72
+    ANDAND  shift, and go to state 73
+    PLUS    shift, and go to state 74
+    MINUS   shift, and go to state 75
+    MULT    shift, and go to state 76
+    DIV     shift, and go to state 77
+    OR      shift, and go to state 78
+    PIPE    shift, and go to state 99
+
+
+state 66
+
+   72 Value: VARNAME LEFT_BRACKET . Expr RIGHT_BRACKET
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 100
+    Value  go to state 38
+
+
+state 67
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   63     | LEFT_PAREN Expr . RIGHT_PAREN
+
+    EQEQ         shift, and go to state 68
+    GT           shift, and go to state 69
+    LT           shift, and go to state 70
+    LTEQ         shift, and go to state 71
+    NE           shift, and go to state 72
+    ANDAND       shift, and go to state 73
+    PLUS         shift, and go to state 74
+    MINUS        shift, and go to state 75
+    MULT         shift, and go to state 76
+    DIV          shift, and go to state 77
+    OR           shift, and go to state 78
+    RIGHT_PAREN  shift, and go to state 101
+
+
+state 68
+
+   48 Expr: Expr EQEQ . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 102
+    Value  go to state 38
+
+
+state 69
+
+   49 Expr: Expr GT . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 103
+    Value  go to state 38
+
+
+state 70
+
+   50 Expr: Expr LT . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 104
+    Value  go to state 38
+
+
+state 71
+
+   51 Expr: Expr LTEQ . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 105
+    Value  go to state 38
+
+
+state 72
+
+   53 Expr: Expr NE . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 106
+    Value  go to state 38
+
+
+state 73
+
+   54 Expr: Expr ANDAND . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 107
+    Value  go to state 38
+
+
+state 74
+
+   55 Expr: Expr PLUS . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 108
+    Value  go to state 38
+
+
+state 75
+
+   56 Expr: Expr MINUS . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 109
+    Value  go to state 38
+
+
+state 76
+
+   57 Expr: Expr MULT . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 110
+    Value  go to state 38
+
+
+state 77
+
+   58 Expr: Expr DIV . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 111
+    Value  go to state 38
+
+
+state 78
+
+   52 Expr: Expr OR . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 112
+    Value  go to state 38
+
+
+state 79
+
+    4 Return: RET Expr SEMI_COLON .
+
+    $default  reduce using rule 4 (Return)
+
+
+state 80
+
+   33 VAR_DEC_LHS: VARNAME COMMA . VAR_DEC_LHS
+
+    VARNAME  shift, and go to state 40
+
+    VAR_DEC_LHS  go to state 113
+
+
+state 81
+
+    9 VarDecs: VAR VAR_DEC_LHS COLON . StringType SEMI_COLON VarDecs
+
+    _INTPTR   shift, and go to state 52
+    _CHARPTR  shift, and go to state 53
+    _BOOL     shift, and go to state 54
+    _INT      shift, and go to state 55
+    _CHAR     shift, and go to state 56
+    _STRING   shift, and go to state 114
+
+    StringType  go to state 115
+    Primitive   go to state 116
+
+
+state 82
+
+   27 IF_WHILE: IF LEFT_PAREN . Expr RIGHT_PAREN CodeBlock Optional_Else
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 117
+    Value  go to state 38
+
+
+state 83
+
+   28 IF_WHILE: WHILE LEFT_PAREN . Expr RIGHT_PAREN CodeBlock
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 118
+    Value  go to state 38
+
+
+state 84
+
+   26 Statement: XOR VARNAME . EQ Expr
+
+    EQ  shift, and go to state 119
+
+
+state 85
+
+   24 Statement: VARNAME LEFT_PAREN . FuncCall RIGHT_PAREN
+   25          | VARNAME LEFT_PAREN . RIGHT_PAREN
+
+    NOT          shift, and go to state 26
+    MINUS        shift, and go to state 27
+    AND          shift, and go to state 28
+    XOR          shift, and go to state 29
+    PIPE         shift, and go to state 30
+    TRUE         shift, and go to state 31
+    FALSE        shift, and go to state 32
+    NULLTOKEN    shift, and go to state 33
+    VARNAME      shift, and go to state 34
+    INT          shift, and go to state 35
+    LEFT_PAREN   shift, and go to state 36
+    RIGHT_PAREN  shift, and go to state 120
+
+    Expr      go to state 121
+    Value     go to state 38
+    FuncCall  go to state 122
+
+
+state 86
+
+   46 ArrayIndex: LEFT_BRACKET . Expr RIGHT_BRACKET
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 123
+    Value  go to state 38
+
+
+state 87
+
+   21 Statement: VARNAME EQ . STRING
+   22          | VARNAME EQ . CHAR
+   23          | VARNAME EQ . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    CHAR        shift, and go to state 124
+    STRING      shift, and go to state 125
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 126
+    Value  go to state 38
+
+
+state 88
+
+   19 Statement: VARNAME ArrayIndex . EQ Expr
+   20          | VARNAME ArrayIndex . EQ CHAR
+
+    EQ  shift, and go to state 127
+
+
+state 89
+
+   32 CodeBlock: LEFT_BRACE RIGHT_BRACE .
+
+    $default  reduce using rule 32 (CodeBlock)
+
+
+state 90
+
+   31 CodeBlock: LEFT_BRACE VarDecs . Statements RIGHT_BRACE
+
+    IF          shift, and go to state 42
+    WHILE       shift, and go to state 43
+    XOR         shift, and go to state 44
+    VARNAME     shift, and go to state 45
+    LEFT_BRACE  shift, and go to state 46
+
+    Statements  go to state 128
+    Statement   go to state 48
+    IF_WHILE    go to state 49
+    CodeBlock   go to state 50
+
+
+state 91
+
+   13 Statements: Statements Statement . SEMI_COLON
+
+    SEMI_COLON  shift, and go to state 129
+
+
+state 92
+
+   15 Statements: Statements IF_WHILE .
+
+    $default  reduce using rule 15 (Statements)
+
+
+state 93
+
+   16 Statements: Statements CodeBlock .
+
+    $default  reduce using rule 16 (Statements)
+
+
+state 94
+
+   14 Statements: Statement SEMI_COLON .
+
+    $default  reduce using rule 14 (Statements)
+
+
+state 95
+
+   12 Declaration: PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive .
+
+    $default  reduce using rule 12 (Declaration)
+
+
+state 96
+
+   36 TypedParamList: Paramlist COLON Primitive SEMI_COLON . TypedParamList
+
+    VARNAME  shift, and go to state 13
+
+    TypedParamList  go to state 130
+    Paramlist       go to state 16
+
+
+state 97
+
+   65 Value: AND VARNAME ArrayIndex .
+
+    $default  reduce using rule 65 (Value)
+
+
+state 98
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   60     | XOR LEFT_PAREN Expr . RIGHT_PAREN
+
+    EQEQ         shift, and go to state 68
+    GT           shift, and go to state 69
+    LT           shift, and go to state 70
+    LTEQ         shift, and go to state 71
+    NE           shift, and go to state 72
+    ANDAND       shift, and go to state 73
+    PLUS         shift, and go to state 74
+    MINUS        shift, and go to state 75
+    MULT         shift, and go to state 76
+    DIV          shift, and go to state 77
+    OR           shift, and go to state 78
+    RIGHT_PAREN  shift, and go to state 131
+
+
+state 99
+
+   59 Expr: PIPE Expr PIPE .
+
+    $default  reduce using rule 59 (Expr)
+
+
+state 100
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   72 Value: VARNAME LEFT_BRACKET Expr . RIGHT_BRACKET
+
+    EQEQ           shift, and go to state 68
+    GT             shift, and go to state 69
+    LT             shift, and go to state 70
+    LTEQ           shift, and go to state 71
+    NE             shift, and go to state 72
+    ANDAND         shift, and go to state 73
+    PLUS           shift, and go to state 74
+    MINUS          shift, and go to state 75
+    MULT           shift, and go to state 76
+    DIV            shift, and go to state 77
+    OR             shift, and go to state 78
+    RIGHT_BRACKET  shift, and go to state 132
+
+
+state 101
+
+   63 Expr: LEFT_PAREN Expr RIGHT_PAREN .
+
+    $default  reduce using rule 63 (Expr)
+
+
+state 102
+
+   48 Expr: Expr . EQEQ Expr
+   48     | Expr EQEQ Expr .
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    GT     shift, and go to state 69
+    LT     shift, and go to state 70
+    LTEQ   shift, and go to state 71
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MULT   shift, and go to state 76
+    DIV    shift, and go to state 77
+    OR     shift, and go to state 78
+
+    $default  reduce using rule 48 (Expr)
+
+
+state 103
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   49     | Expr GT Expr .
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MULT   shift, and go to state 76
+    DIV    shift, and go to state 77
+    OR     shift, and go to state 78
+
+    $default  reduce using rule 49 (Expr)
+
+
+state 104
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   50     | Expr LT Expr .
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MULT   shift, and go to state 76
+    DIV    shift, and go to state 77
+    OR     shift, and go to state 78
+
+    $default  reduce using rule 50 (Expr)
+
+
+state 105
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   51     | Expr LTEQ Expr .
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MULT   shift, and go to state 76
+    DIV    shift, and go to state 77
+    OR     shift, and go to state 78
+
+    $default  reduce using rule 51 (Expr)
+
+
+state 106
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   53     | Expr NE Expr .
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    GT     shift, and go to state 69
+    LT     shift, and go to state 70
+    LTEQ   shift, and go to state 71
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MULT   shift, and go to state 76
+    DIV    shift, and go to state 77
+    OR     shift, and go to state 78
+
+    $default  reduce using rule 53 (Expr)
+
+
+state 107
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   54     | Expr ANDAND Expr .
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ   shift, and go to state 68
+    GT     shift, and go to state 69
+    LT     shift, and go to state 70
+    LTEQ   shift, and go to state 71
+    NE     shift, and go to state 72
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MULT   shift, and go to state 76
+    DIV    shift, and go to state 77
+    OR     shift, and go to state 78
+
+    $default  reduce using rule 54 (Expr)
+
+
+state 108
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   55     | Expr PLUS Expr .
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    MULT  shift, and go to state 76
+    DIV   shift, and go to state 77
+    OR    shift, and go to state 78
+
+    $default  reduce using rule 55 (Expr)
+
+
+state 109
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   56     | Expr MINUS Expr .
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    MULT  shift, and go to state 76
+    DIV   shift, and go to state 77
+    OR    shift, and go to state 78
+
+    $default  reduce using rule 56 (Expr)
+
+
+state 110
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   57     | Expr MULT Expr .
+   58     | Expr . DIV Expr
+
+    OR  shift, and go to state 78
+
+    $default  reduce using rule 57 (Expr)
+
+
+state 111
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   58     | Expr DIV Expr .
+
+    OR  shift, and go to state 78
+
+    $default  reduce using rule 58 (Expr)
+
+
+state 112
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   52     | Expr OR Expr .
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    $default  reduce using rule 52 (Expr)
+
+
+state 113
+
+   33 VAR_DEC_LHS: VARNAME COMMA VAR_DEC_LHS .
+
+    $default  reduce using rule 33 (VAR_DEC_LHS)
+
+
+state 114
+
+   40 StringType: _STRING . LEFT_BRACKET INT RIGHT_BRACKET
+
+    LEFT_BRACKET  shift, and go to state 133
+
+
+state 115
+
+    9 VarDecs: VAR VAR_DEC_LHS COLON StringType . SEMI_COLON VarDecs
+
+    SEMI_COLON  shift, and go to state 134
+
+
+state 116
+
+   39 StringType: Primitive .
+
+    $default  reduce using rule 39 (StringType)
+
+
+state 117
+
+   27 IF_WHILE: IF LEFT_PAREN Expr . RIGHT_PAREN CodeBlock Optional_Else
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ         shift, and go to state 68
+    GT           shift, and go to state 69
+    LT           shift, and go to state 70
+    LTEQ         shift, and go to state 71
+    NE           shift, and go to state 72
+    ANDAND       shift, and go to state 73
+    PLUS         shift, and go to state 74
+    MINUS        shift, and go to state 75
+    MULT         shift, and go to state 76
+    DIV          shift, and go to state 77
+    OR           shift, and go to state 78
+    RIGHT_PAREN  shift, and go to state 135
+
+
+state 118
+
+   28 IF_WHILE: WHILE LEFT_PAREN Expr . RIGHT_PAREN CodeBlock
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ         shift, and go to state 68
+    GT           shift, and go to state 69
+    LT           shift, and go to state 70
+    LTEQ         shift, and go to state 71
+    NE           shift, and go to state 72
+    ANDAND       shift, and go to state 73
+    PLUS         shift, and go to state 74
+    MINUS        shift, and go to state 75
+    MULT         shift, and go to state 76
+    DIV          shift, and go to state 77
+    OR           shift, and go to state 78
+    RIGHT_PAREN  shift, and go to state 136
+
+
+state 119
+
+   26 Statement: XOR VARNAME EQ . Expr
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 137
+    Value  go to state 38
+
+
+state 120
+
+   25 Statement: VARNAME LEFT_PAREN RIGHT_PAREN .
+
+    $default  reduce using rule 25 (Statement)
+
+
+state 121
+
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+   73 FuncCall: Expr . COMMA FuncCall
+   74         | Expr .
+
+    EQEQ    shift, and go to state 68
+    GT      shift, and go to state 69
+    LT      shift, and go to state 70
+    LTEQ    shift, and go to state 71
+    NE      shift, and go to state 72
+    ANDAND  shift, and go to state 73
+    PLUS    shift, and go to state 74
+    MINUS   shift, and go to state 75
+    MULT    shift, and go to state 76
+    DIV     shift, and go to state 77
+    OR      shift, and go to state 78
+    COMMA   shift, and go to state 138
+
+    $default  reduce using rule 74 (FuncCall)
+
+
+state 122
+
+   24 Statement: VARNAME LEFT_PAREN FuncCall . RIGHT_PAREN
+
+    RIGHT_PAREN  shift, and go to state 139
+
+
+state 123
+
+   46 ArrayIndex: LEFT_BRACKET Expr . RIGHT_BRACKET
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ           shift, and go to state 68
+    GT             shift, and go to state 69
+    LT             shift, and go to state 70
+    LTEQ           shift, and go to state 71
+    NE             shift, and go to state 72
+    ANDAND         shift, and go to state 73
+    PLUS           shift, and go to state 74
+    MINUS          shift, and go to state 75
+    MULT           shift, and go to state 76
+    DIV            shift, and go to state 77
+    OR             shift, and go to state 78
+    RIGHT_BRACKET  shift, and go to state 140
+
+
+state 124
+
+   22 Statement: VARNAME EQ CHAR .
+
+    $default  reduce using rule 22 (Statement)
+
+
+state 125
+
+   21 Statement: VARNAME EQ STRING .
+
+    $default  reduce using rule 21 (Statement)
+
+
+state 126
+
+   23 Statement: VARNAME EQ Expr .
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ    shift, and go to state 68
+    GT      shift, and go to state 69
+    LT      shift, and go to state 70
+    LTEQ    shift, and go to state 71
+    NE      shift, and go to state 72
+    ANDAND  shift, and go to state 73
+    PLUS    shift, and go to state 74
+    MINUS   shift, and go to state 75
+    MULT    shift, and go to state 76
+    DIV     shift, and go to state 77
+    OR      shift, and go to state 78
+
+    $default  reduce using rule 23 (Statement)
+
+
+state 127
+
+   19 Statement: VARNAME ArrayIndex EQ . Expr
+   20          | VARNAME ArrayIndex EQ . CHAR
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    CHAR        shift, and go to state 141
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr   go to state 142
+    Value  go to state 38
+
+
+state 128
+
+   13 Statements: Statements . Statement SEMI_COLON
+   15           | Statements . IF_WHILE
+   16           | Statements . CodeBlock
+   31 CodeBlock: LEFT_BRACE VarDecs Statements . RIGHT_BRACE
+
+    IF           shift, and go to state 42
+    WHILE        shift, and go to state 43
+    XOR          shift, and go to state 44
+    VARNAME      shift, and go to state 45
+    LEFT_BRACE   shift, and go to state 46
+    RIGHT_BRACE  shift, and go to state 143
+
+    Statement  go to state 91
+    IF_WHILE   go to state 92
+    CodeBlock  go to state 93
+
+
+state 129
+
+   13 Statements: Statements Statement SEMI_COLON .
+
+    $default  reduce using rule 13 (Statements)
+
+
+state 130
+
+   36 TypedParamList: Paramlist COLON Primitive SEMI_COLON TypedParamList .
+
+    $default  reduce using rule 36 (TypedParamList)
+
+
+state 131
+
+   60 Expr: XOR LEFT_PAREN Expr RIGHT_PAREN .
+
+    $default  reduce using rule 60 (Expr)
+
+
+state 132
+
+   72 Value: VARNAME LEFT_BRACKET Expr RIGHT_BRACKET .
+
+    $default  reduce using rule 72 (Value)
+
+
+state 133
+
+   40 StringType: _STRING LEFT_BRACKET . INT RIGHT_BRACKET
+
+    INT  shift, and go to state 144
+
+
+state 134
+
+    9 VarDecs: VAR VAR_DEC_LHS COLON StringType SEMI_COLON . VarDecs
+
+    VAR  shift, and go to state 20
+
+    $default  reduce using rule 10 (VarDecs)
+
+    VarDecs  go to state 145
+
+
+state 135
+
+   27 IF_WHILE: IF LEFT_PAREN Expr RIGHT_PAREN . CodeBlock Optional_Else
+
+    LEFT_BRACE  shift, and go to state 46
+
+    CodeBlock  go to state 146
+
+
+state 136
+
+   28 IF_WHILE: WHILE LEFT_PAREN Expr RIGHT_PAREN . CodeBlock
+
+    LEFT_BRACE  shift, and go to state 46
+
+    CodeBlock  go to state 147
+
+
+state 137
+
+   26 Statement: XOR VARNAME EQ Expr .
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ    shift, and go to state 68
+    GT      shift, and go to state 69
+    LT      shift, and go to state 70
+    LTEQ    shift, and go to state 71
+    NE      shift, and go to state 72
+    ANDAND  shift, and go to state 73
+    PLUS    shift, and go to state 74
+    MINUS   shift, and go to state 75
+    MULT    shift, and go to state 76
+    DIV     shift, and go to state 77
+    OR      shift, and go to state 78
+
+    $default  reduce using rule 26 (Statement)
+
+
+state 138
+
+   73 FuncCall: Expr COMMA . FuncCall
+
+    NOT         shift, and go to state 26
+    MINUS       shift, and go to state 27
+    AND         shift, and go to state 28
+    XOR         shift, and go to state 29
+    PIPE        shift, and go to state 30
+    TRUE        shift, and go to state 31
+    FALSE       shift, and go to state 32
+    NULLTOKEN   shift, and go to state 33
+    VARNAME     shift, and go to state 34
+    INT         shift, and go to state 35
+    LEFT_PAREN  shift, and go to state 36
+
+    Expr      go to state 121
+    Value     go to state 38
+    FuncCall  go to state 148
+
+
+state 139
+
+   24 Statement: VARNAME LEFT_PAREN FuncCall RIGHT_PAREN .
+
+    $default  reduce using rule 24 (Statement)
+
+
+state 140
+
+   46 ArrayIndex: LEFT_BRACKET Expr RIGHT_BRACKET .
+
+    $default  reduce using rule 46 (ArrayIndex)
+
+
+state 141
+
+   20 Statement: VARNAME ArrayIndex EQ CHAR .
+
+    $default  reduce using rule 20 (Statement)
+
+
+state 142
+
+   19 Statement: VARNAME ArrayIndex EQ Expr .
+   48 Expr: Expr . EQEQ Expr
+   49     | Expr . GT Expr
+   50     | Expr . LT Expr
+   51     | Expr . LTEQ Expr
+   52     | Expr . OR Expr
+   53     | Expr . NE Expr
+   54     | Expr . ANDAND Expr
+   55     | Expr . PLUS Expr
+   56     | Expr . MINUS Expr
+   57     | Expr . MULT Expr
+   58     | Expr . DIV Expr
+
+    EQEQ    shift, and go to state 68
+    GT      shift, and go to state 69
+    LT      shift, and go to state 70
+    LTEQ    shift, and go to state 71
+    NE      shift, and go to state 72
+    ANDAND  shift, and go to state 73
+    PLUS    shift, and go to state 74
+    MINUS   shift, and go to state 75
+    MULT    shift, and go to state 76
+    DIV     shift, and go to state 77
+    OR      shift, and go to state 78
+
+    $default  reduce using rule 19 (Statement)
+
+
+state 143
+
+   31 CodeBlock: LEFT_BRACE VarDecs Statements RIGHT_BRACE .
+
+    $default  reduce using rule 31 (CodeBlock)
+
+
+state 144
+
+   40 StringType: _STRING LEFT_BRACKET INT . RIGHT_BRACKET
+
+    RIGHT_BRACKET  shift, and go to state 149
+
+
+state 145
+
+    9 VarDecs: VAR VAR_DEC_LHS COLON StringType SEMI_COLON VarDecs .
+
+    $default  reduce using rule 9 (VarDecs)
+
+
+state 146
+
+   27 IF_WHILE: IF LEFT_PAREN Expr RIGHT_PAREN CodeBlock . Optional_Else
+
+    ELSE  shift, and go to state 150
+
+    $default  reduce using rule 30 (Optional_Else)
+
+    Optional_Else  go to state 151
+
+
+state 147
+
+   28 IF_WHILE: WHILE LEFT_PAREN Expr RIGHT_PAREN CodeBlock .
+
+    $default  reduce using rule 28 (IF_WHILE)
+
+
+state 148
+
+   73 FuncCall: Expr COMMA FuncCall .
+
+    $default  reduce using rule 73 (FuncCall)
+
+
+state 149
+
+   40 StringType: _STRING LEFT_BRACKET INT RIGHT_BRACKET .
+
+    $default  reduce using rule 40 (StringType)
+
+
+state 150
+
+   29 Optional_Else: ELSE . CodeBlock
+
+    LEFT_BRACE  shift, and go to state 46
+
+    CodeBlock  go to state 152
+
+
+state 151
+
+   27 IF_WHILE: IF LEFT_PAREN Expr RIGHT_PAREN CodeBlock Optional_Else .
+
+    $default  reduce using rule 27 (IF_WHILE)
+
+
+state 152
+
+   29 Optional_Else: ELSE CodeBlock .
+
+    $default  reduce using rule 29 (Optional_Else)

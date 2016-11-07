@@ -1,0 +1,352 @@
+%{
+    #include <stdio.h>
+    #include <stdlib.h>
+    #define YYDEBUG 1
+
+    int yylex(void);
+    void yyerror(const char *);
+%}
+
+/* Enables verbose error messages */
+%error-verbose
+
+/** WRITE ME:
+ *  - Put all your token definitions here
+ *  - Put all your type definitions here
+ *  - Put all your precedence/associativity rules here
+ */
+
+%start Program
+
+%token PROCEDURE
+%token ELSE
+%token IF
+%token FOR
+%token VAR
+%token RET
+%token WHILE
+
+%token EQEQ
+%token GT
+%token GTEQ
+%token LT
+%token LTEQ
+%token NE
+%token ANDAND
+%token OROR
+%token NOT
+%token PLUS
+%token MINUS
+%token MULT
+%token DIV
+%token AND
+%token XOR
+%token OR
+%token PIPE
+
+%token _INTPTR
+%token _CHARPTR
+%token _BOOL
+%token _INT
+%token _CHAR
+%token _STRING
+
+
+%token TRUE
+%token FALSE
+%token NULLTOKEN
+
+%token VARNAME
+%token INT
+%token CHAR
+%token STRING
+
+
+%token SEMI_COLON
+%token COLON
+%token COMMA
+%token ABS
+%token LEFT_BRACE
+%token RIGHT_BRACE
+%token LEFT_PAREN
+%token RIGHT_PAREN
+%token LEFT_BRACKET
+%token RIGHT_BRACKET
+%token EQ
+
+
+%nonassoc EQ
+%left COMMA
+%left OROR
+%left ANDAND
+%left EQEQ NE
+%left GT GTEQ LT LTEQ
+%left PLUS MINUS
+%left MULT DIV
+
+%right NOT AND XOR
+
+%left LEFT_PAREN RIGHT_PAREN LEFT_BRACKET RIGHT_BRACKET ABS OR PIPE
+
+
+
+
+%%
+
+/** WRITE ME:
+ 
+ 
+ Expr        :   Value
+ |   AND Expr
+ |   XOR Expr
+ |   Expr EQEQ Expr
+ |   Expr GT Expr
+ |   Expr GTEQ Expr
+ |   Expr LT Expr
+ |   Expr LTEQ Expr
+ |   Expr OR Expr
+ |   Expr NE Expr
+ |   Expr ANDAND Expr
+ |   Expr PLUS Expr
+ |   Expr MINUS Expr
+ |   Expr MULT Expr
+ |   Expr DIV Expr
+ |   PIPE Expr PIPE
+ |   NOT Expr
+ |   MINUS Expr
+ |   LEFT_PAREN Expr RIGHT_PAREN
+ 
+ 
+ 
+ 
+ *  This is the language from Project 1. You need to put the productions for
+ *  the grammar for the language for this project here.
+ */
+
+/*
+
+List    : List Expr '.' {printf("parsed expresion\n");}
+	| Expr '.' {printf("parsed expresion\n");}
+        ;
+
+Expr    : Expr '*' Expr 
+        | Expr '+' Expr 
+        | Expr '-' Expr
+        | Expr '%' Expr
+        | 'n'
+        | '(' Expr ')'
+        ;
+ 
+ */
+
+
+Program     :   Program Proc
+            |   Proc
+            ;
+/*
+
+Proc        :   PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+            |   PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+            ;
+*/
+
+Proc        :   Declaration LEFT_BRACE Structure Return RIGHT_BRACE
+            ;
+
+Return      :   RET Expr SEMI_COLON
+            ;
+
+Structure   :   Procs VarDecs Statements
+            |   Procs VarDecs
+            ;
+
+Procs       :   Proc Procs
+            |
+            ;
+
+
+VarDecs     :   VAR VAR_DEC_LHS COLON StringType SEMI_COLON VarDecs
+            |
+            ;
+
+
+Declaration :   PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN RET Primitive
+            |   PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive
+            ;
+
+
+Statements  :   Statements Statement SEMI_COLON
+            |   Statement SEMI_COLON
+            |   Statements IF_WHILE
+            |   Statements CodeBlock
+            |   IF_WHILE
+            |   CodeBlock
+            ;
+
+/*
+ 
+ Statements  :   Statements Statement SEMI_COLON
+ |   Statement SEMI_COLON
+ |   Statements IF_WHILE
+|   Statements CodeBlock
+|   IF_WHILE
+|   CodeBlock
+
+ */
+
+Statement   :   VARNAME ArrayIndex EQ Expr
+            |   VARNAME ArrayIndex EQ CHAR
+            |   VARNAME EQ STRING
+            |   VARNAME EQ CHAR
+            |   VARNAME EQ Expr
+            |   VARNAME LEFT_PAREN FuncCall RIGHT_PAREN
+            |   VARNAME LEFT_PAREN RIGHT_PAREN
+            |   XOR VARNAME EQ Expr
+            ;
+
+
+
+/*            |   Lhs EQ Expr*/
+
+
+
+/*
+ 
+
+ 
+ 
+ 
+ Lhs         :   VARNAME ArrayIndex
+ |   NOT VARNAME
+ ;
+ 
+ */
+
+IF_WHILE    :   IF LEFT_PAREN Expr RIGHT_PAREN CodeBlock Optional_Else
+            |   WHILE LEFT_PAREN Expr RIGHT_PAREN CodeBlock
+            ;
+
+Optional_Else   :   ELSE CodeBlock
+                |
+                ;
+
+CodeBlock   :   LEFT_BRACE VarDecs Statements RIGHT_BRACE
+            |   LEFT_BRACE RIGHT_BRACE
+            ;
+
+
+VAR_DEC_LHS :   VARNAME COMMA VAR_DEC_LHS
+            |   VARNAME
+            ;
+
+
+TypedParamList  : Paramlist COLON Primitive
+                | Paramlist COLON Primitive SEMI_COLON TypedParamList
+                ;
+
+Paramlist   :   VARNAME COMMA Paramlist
+            |   VARNAME
+            ;
+
+StringType  :   Primitive
+            |   _STRING LEFT_BRACKET INT RIGHT_BRACKET
+            ;
+
+Primitive   :   _INT
+            |   _CHAR
+            |   _CHARPTR
+            |   _INTPTR
+            |   _BOOL
+            ;
+
+
+ArrayIndex  : LEFT_BRACKET Expr RIGHT_BRACKET
+            ;
+
+Expr        :   Value
+            |   Expr EQEQ Expr
+            |   Expr GT Expr
+            |   Expr LT Expr
+            |   Expr LTEQ Expr
+            |   Expr OR Expr
+            |   Expr NE Expr
+            |   Expr ANDAND Expr
+            |   Expr PLUS Expr
+            |   Expr MINUS Expr
+            |   Expr MULT Expr
+            |   Expr DIV Expr
+            |   PIPE Expr PIPE
+            |   XOR LEFT_PAREN Expr RIGHT_PAREN
+            |   NOT Expr
+            |   MINUS Expr
+            |   LEFT_PAREN Expr RIGHT_PAREN
+            ;
+
+/*
+            |   AND Expr
+            |   XOR Expr
+            |   Expr EQEQ Expr
+            |   Expr GT Expr
+            |   Expr GTEQ Expr
+            |   Expr LT Expr
+            |   Expr LTEQ Expr
+            |   Expr OR Expr
+            |   Expr NE Expr
+            |   Expr ANDAND Expr
+            |   Expr PLUS Expr
+            |   Expr MINUS Expr
+            |   Expr MULT Expr
+            |   Expr DIV Expr
+            |   PIPE Expr PIPE
+            |   NOT Expr
+            |   MINUS Expr
+            |   LEFT_PAREN Expr RIGHT_PAREN
+            ;
+*/
+
+Value       :   VARNAME
+            |   AND VARNAME ArrayIndex
+            |   AND VARNAME
+            |   INT
+            |   TRUE
+            |   FALSE
+            |   NULLTOKEN
+            |   XOR VARNAME
+        /*    |   VARNAME LEFT_PAREN FuncCall RIGHT_PAREN
+            |   VARNAME LEFT_PAREN RIGHT_PAREN      */
+            |   VARNAME LEFT_BRACKET Expr RIGHT_BRACKET
+            ;
+
+
+FuncCall    :   Expr COMMA FuncCall
+            |   Expr
+            ;
+
+/*
+ 
+ "&&"			{return ANDAND; }
+ "=="			{return EQEQ; }
+ ">="			{return GTEQ; }
+ "<="			{return LTEQ; }
+ "!="			{return NE; }
+ "!"				{return NOT; }
+ "||"			{return OR; }
+ "="				{return EQ; }
+ ">"				{return GT; }
+ "<"				{return LT; }
+ */
+
+
+%%
+
+/** You shall not pass!
+ *  You should not  have to do or edit anything past this.
+ */
+
+extern int yylineno;
+
+void yyerror(const char *s)
+{
+    fprintf(stderr, "%s at line %d\n", s, yylineno);
+    return;
+}

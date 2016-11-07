@@ -1,0 +1,512 @@
+%{
+    #include <cstdio>
+    #include <cstdlib>
+
+    #include "ast.hpp"
+    #include "primitive.hpp"
+    #include "symtab.hpp"
+
+    #define YYDEBUG 1
+
+    extern Program_ptr ast;
+    int yylex(void);
+    void yyerror(const char *);
+%}
+
+/* Enables verbose error messages */
+%error-verbose
+
+%start Program
+
+%token PROCEDURE
+%token ELSE
+%token IF
+%token FOR
+%token VAR
+%token RET
+%token WHILE
+
+%token EQEQ
+%token GT
+%token GTEQ
+%token LT
+%token LTEQ
+%token NE
+%token ANDAND
+%token OROR
+%token NOT
+%token PLUS
+%token MINUS
+%token MULT
+%token DIV
+%token AND
+%token XOR
+%token OR
+%token PIPE
+
+%token _INTPTR
+%token _CHARPTR
+%token _BOOL
+%token _INT
+%token _CHAR
+%token _STRING
+
+
+%token TRUE
+%token FALSE
+%token NULLTOKEN
+
+%token VARNAME
+%token INT
+%token CHAR
+%token STRING
+
+
+%token SEMI_COLON
+%token COLON
+%token COMMA
+%token ABS
+%token LEFT_BRACE
+%token RIGHT_BRACE
+%token LEFT_PAREN
+%token RIGHT_PAREN
+%token LEFT_BRACKET
+%token RIGHT_BRACKET
+%token EQ
+
+
+%nonassoc EQ
+%left COMMA
+%left OROR
+%left ANDAND
+%left EQEQ NE
+%left GT GTEQ LT LTEQ
+%left PLUS MINUS
+%left MULT DIV
+
+%right NOT AND XOR
+
+%left LEFT_PAREN RIGHT_PAREN LEFT_BRACKET RIGHT_BRACKET ABS OR PIPE
+
+
+
+
+%%
+
+/** WRITE ME:
+ 
+ 
+ Expr        :   Value
+ |   AND Expr
+ |   XOR Expr
+ |   Expr EQEQ Expr
+ |   Expr GT Expr
+ |   Expr GTEQ Expr
+ |   Expr LT Expr
+ |   Expr LTEQ Expr
+ |   Expr OR Expr
+ |   Expr NE Expr
+ |   Expr ANDAND Expr
+ |   Expr PLUS Expr
+ |   Expr MINUS Expr
+ |   Expr MULT Expr
+ |   Expr DIV Expr
+ |   PIPE Expr PIPE
+ |   NOT Expr
+ |   MINUS Expr
+ |   LEFT_PAREN Expr RIGHT_PAREN
+ 
+ 
+ 
+ 
+ *  This is the language from Project 1. You need to put the productions for
+ *  the grammar for the language for this project here.
+ */
+
+/*
+ 
+ List    : List Expr '.' {printf("parsed expresion\n");}
+	| Expr '.' {printf("parsed expresion\n");}
+ ;
+ 
+ Expr    : Expr '*' Expr
+ | Expr '+' Expr
+ | Expr '-' Expr
+ | Expr '%' Expr
+ | 'n'
+ | '(' Expr ')'
+ ;
+ 
+ */
+
+
+Program     :   Proc Procs
+            {
+                ast = new ProgramImpl($2.u_proc_list);
+                ($2.u_proc_list)->push_front($1.u_proc);
+            }
+            ;
+/*
+ 
+ Proc        :   PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+ |   PROCEDURE VARNAME LEFT_PAREN RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
+ ;
+ */
+
+Proc        :   PROCEDURE VARNAME LEFT_PAREN ParameterListOrNot RIGHT_PAREN RET Primitive LEFT_BRACE Structure RIGHT_BRACE
+            {
+                $$.u_proc=new ProcImpl(new SymName($2.u_base_charptr), $4.u_decl_list, $7.u_type, $9.u_procedure_block);
+            }
+            ;
+
+ParameterListOrNot  :   TypedParamList
+                    {
+                        $$ = $1;
+                    }
+                    |
+                    {
+                        $$.u_decl_list=new std::list<Decl_ptr>();
+                        std::fprintf(stderr, "no parameter list.\n");
+                    }
+                    ;
+
+
+
+TypedParamList  : Paramlist COLON Primitive
+                {
+                    $$.u_decl_list=new std::list<Decl_ptr>();
+                    ($$.u_decl_list)->push_back(new DeclImpl($1.u_symname_list, $3.u_type));
+                }
+                | Paramlist COLON Primitive SEMI_COLON TypedParamList
+                {
+                    ($5.u_decl_list)->push_front(new DeclImpl($1.u_symname_list,$3.u_type));
+                    $$ = $5;
+                }
+                ;
+
+
+
+Paramlist   :   Paramlist COMMA VARNAME
+            {
+                $1.u_symname_list->push_back(new SymName($3.u_base_charptr));
+                $$ = $1;
+            }
+            |   VARNAME
+            {
+                $$.u_symname_list = new std::list<SymName_ptr>();
+                ($$.u_symname_list)->push_back(new SymName($1.u_base_charptr));
+            }
+            ;
+
+
+
+
+Return      :   RET Expr SEMI_COLON
+            {
+                $$.u_return_stat = new Return($2.u_expr);
+            }
+            ;
+
+/*
+ Procedure_blockImpl(std::list<Decl_ptr> *p1, std::list<Proc_ptr> *p2, std::list<Stat_ptr> *p3, Return_stat *p4)  {
+ 
+ */
+
+Structure   :   Procs VarDecs Statements Return
+            {
+                std::fprintf(stderr, "Entering Proc structure.\n");
+                $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list, $2.u_decl_list, $3.u_stat_list, $4.u_return_stat);
+            }
+            |   Procs VarDecs Return
+            {
+                std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
+                $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list,$2.u_decl_list, new std::list<Stat_ptr>, $3.u_return_stat);
+            }
+            ;
+
+Procs       :   Procs Proc
+            {
+                ($1.u_proc_list)->push_back($2.u_proc);
+                $$=$1;
+            }
+            |
+            {
+                $$.u_proc_list = new std::list<Proc_ptr>();
+                std::fprintf(stderr, "procedures done.\n");
+            }
+            ;
+
+
+VarDecs     :   VarDecs VarDec
+            {
+    
+    /*                ($$.u_decl_list)->push_back(new DeclImpl($3.u_symname_list, $5.u_type))   */
+                $1.u_decl_list->push_back($2.u_decl);
+                $$ = $1;
+            }
+            |
+            {
+                $$.u_decl_list = new std::list<Decl_ptr>();
+            }
+            ;
+
+
+
+VarDec      :   VAR VAR_DEC_LHS COLON StringType SEMI_COLON
+            {
+                $$.u_decl = new DeclImpl($2.u_symname_list, $4.u_type);
+            }
+            ;
+
+
+VAR_DEC_LHS :   VARNAME COMMA VAR_DEC_LHS
+            {
+                ($3.u_symname_list)->push_front(new SymName($1.u_base_charptr));
+                ($$.u_symname_list) = $3.u_symname_list;
+            }
+            |   VARNAME
+            {
+                ($$.u_symname_list) = new std::list<SymName_ptr>();
+                ($$.u_symname_list)->push_back(new SymName($1.u_base_charptr));
+            }
+            ;
+
+
+Statements  :   Statements Statement
+            {
+                $1.u_stat_list->push_back($2.u_stat);
+                $$ = $1;
+            }
+            |   Statement
+            {
+                $$.u_stat_list = new std::list<Stat_ptr>();
+                $$.u_stat_list -> push_back($1.u_stat);
+            }
+            ;
+
+/*
+ 
+ Statements  :   Statements Statement SEMI_COLON
+ |   Statement SEMI_COLON
+ |   Statements IF_WHILE
+ |   Statements CodeBlock
+ |   IF_WHILE
+ |   CodeBlock
+ 
+ */
+
+Statement   :   VARNAME ArrayIndex EQ Expr SEMI_COLON
+{
+    $$.u_stat = new Assignment(new ArrayElement(new SymName($1.u_base_charptr), $2.u_expr), $4.u_expr);
+}
+/*
+|   VARNAME ArrayIndex EQ CHAR  SEMI_COLON
+{
+    
+    $$.u_stat = new Assignment(new ArrayElement(new SymName($1.u_base_charptr), $2.u_expr), new CharLit(new Primitive($3.u_base_int)));
+     
+}*/
+|   VARNAME EQ STRING  SEMI_COLON
+{
+    
+    $$.u_stat = new StringAssignment(new Variable(new SymName($1.u_base_charptr)), new StringPrimitive($3.u_base_charptr));
+    
+}
+/*
+|   VARNAME EQ CHAR SEMI_COLON
+{
+    $$.u_stat = new Assignment(new Variable(new SymName($1.u_base_charptr)), new CharLit(new Primitive($3.u_base_int)));
+}
+ */
+|   VARNAME EQ Expr SEMI_COLON
+{
+    $$.u_stat = new Assignment(new Variable(new SymName($1.u_base_charptr)), $3.u_expr)
+}
+|   VARNAME EQ VARNAME LEFT_PAREN FuncCall RIGHT_PAREN  SEMI_COLON
+{
+    $$.u_stat=new Call(new Variable(new SymName($1.u_base_charptr)),new SymName($3.u_base_charptr), $5.u_expr_list);
+}
+|   VARNAME EQ VARNAME LEFT_PAREN RIGHT_PAREN  SEMI_COLON
+{
+    $$.u_stat=new Call(new Variable(new SymName($1.u_base_charptr)),new SymName($3.u_base_charptr), new std::list<Expr_ptr>());
+}/*
+|   XOR VARNAME EQ Expr*/
+|   IF_WHILE
+  
+|   CodeBlock
+{
+    $$.u_stat = new CodeBlock($1.u_nested_block);
+}
+  
+;
+
+
+
+FuncCall    :   Expr COMMA FuncCall
+{
+    $3.u_expr_list->push_back($1.u_expr);
+    $$ = $3;
+}
+|   Expr
+{
+    $$.u_expr_list = new std::list<Expr_ptr>();
+    $$.u_expr_list->push_back($1.u_expr);
+}
+;
+
+
+
+/*            |   Lhs EQ Expr*/
+
+
+
+/*
+ 
+ 
+ 
+ 
+ 
+ Lhs         :   VARNAME ArrayIndex
+ |   NOT VARNAME
+ ;
+ 
+ */
+
+IF_WHILE    :   IF LEFT_PAREN Expr RIGHT_PAREN CodeBlock ELSE CodeBlock
+{
+    $$.u_stat = new IfWithElse($3.u_expr, $5.u_nested_block, $7.u_nested_block);
+}
+|   IF LEFT_PAREN Expr RIGHT_PAREN CodeBlock
+{
+    $$.u_stat = new IfNoElse($3.u_expr, $5.u_nested_block);
+}
+|   WHILE LEFT_PAREN Expr RIGHT_PAREN CodeBlock
+{
+    $$.u_stat = new WhileLoop($3.u_expr, $5.u_nested_block);
+}
+;
+
+CodeBlock   :   LEFT_BRACE VarDecs Statements RIGHT_BRACE
+{
+    $$.u_nested_block = new Nested_blockImpl($2.u_decl_list, $3.u_stat_list);
+}
+|   LEFT_BRACE RIGHT_BRACE
+{
+    $$.u_nested_block = new Nested_blockImpl(new std::list<Decl_ptr>(), new std::list<Stat_ptr>());
+}
+;
+
+
+StringType  :   Primitive               /*  FOR DECLARING A VARIABLE INCLUDING A NEW STRING */
+{
+    $$ = $1;
+}
+|   _STRING LEFT_BRACKET INT RIGHT_BRACKET
+{
+    $$.u_type = new TString(new Primitive($3.u_base_int));                                   /* TODO */
+}
+;
+
+Primitive   :   _INT    {$$.u_type = new TInteger();}
+|   _CHAR               {$$.u_type = new TCharacter();}
+|   _CHARPTR            {$$.u_type = new TCharPtr();}
+|   _INTPTR             {$$.u_type = new TIntPtr();}
+|   _BOOL               {$$.u_type = new TBoolean();}
+;
+
+
+ArrayIndex  : LEFT_BRACKET Expr RIGHT_BRACKET
+{
+    $$.u_expr = $2.u_expr;
+}
+;
+
+Expr        :   Value   {$$.u_expr = $1.u_expr;}
+|   Expr EQEQ Expr  {$$.u_expr = new Compare($1.u_expr, $3.u_expr);}
+|   Expr GT Expr    {$$.u_expr = new Gt($1.u_expr, $3.u_expr);}
+|   Expr LT Expr    {$$.u_expr = new Lt($1.u_expr, $3.u_expr);}
+|   Expr LTEQ Expr  {$$.u_expr = new Lteq($1.u_expr, $3.u_expr);}
+|   Expr OR Expr    {$$.u_expr = new Or($1.u_expr, $3.u_expr);}
+|   Expr NE Expr    {$$.u_expr = new Noteq($1.u_expr, $3.u_expr);}
+|   Expr ANDAND Expr    {$$.u_expr = new And($1.u_expr, $3.u_expr);}
+|   Expr PLUS Expr  {$$.u_expr = new Plus($1.u_expr, $3.u_expr);}
+|   Expr MINUS Expr {$$.u_expr = new Minus($1.u_expr, $3.u_expr);}
+|   Expr MULT Expr  {$$.u_expr = new Times($1.u_expr, $3.u_expr);}
+|   Expr DIV Expr   {$$.u_expr = new Div($1.u_expr, $3.u_expr);}
+|   PIPE Expr PIPE  {$$.u_expr = new AbsoluteValue($2.u_expr);}
+|   XOR LEFT_PAREN Expr RIGHT_PAREN {$$.u_expr=new Deref($1.u_expr);}
+|   NOT Expr    {$$.u_expr = new Not($2.u_expr);}
+|   MINUS Expr  {$$.u_expr = new Uminus($2.u_expr);}
+|   LEFT_PAREN Expr RIGHT_PAREN {$$.u_expr = ($2.u_expr);}
+;
+
+/*
+ |   AND Expr
+ |   XOR Expr
+ |   Expr EQEQ Expr
+ |   Expr GT Expr
+ |   Expr GTEQ Expr
+ |   Expr LT Expr
+ |   Expr LTEQ Expr
+ |   Expr OR Expr
+ |   Expr NE Expr
+ |   Expr ANDAND Expr
+ |   Expr PLUS Expr
+ |   Expr MINUS Expr
+ |   Expr MULT Expr
+ |   Expr DIV Expr
+ |   PIPE Expr PIPE
+ |   NOT Expr
+ |   MINUS Expr
+ |   LEFT_PAREN Expr RIGHT_PAREN
+ ;
+ */
+
+Value       :   VARNAME { $$.u_expr=new Ident(new SymName($1.u_base_charptr));}
+|   AND VARNAME ArrayIndex {$$.u_expr = new ArrayAccess(new SymName($1.u_base_charptr), $3.u_expr);}            /*      give AND functionality? */
+|   AND VARNAME         {$$.u_expr= new AddressOf(new Variable(new SymName($2.u_base_charptr)));}
+|   INT                 {$$.u_expr=new IntLit(new Primitive($1.u_base_int)); }
+|   CHAR                {$$.u_expr=new CharLit(new Primitive($1.u_base_int)); }
+|   TRUE                {$$.u_expr=new BoolLit(new Primitive($1.u_base_int));}
+|   FALSE               {$$.u_expr=new BoolLit(new Primitive($1.u_base_int));}
+|   NULLTOKEN
+|   XOR VARNAME         {$$.u_expr=new Deref(new Ident(new SymName($2.u_base_charptr)));}
+/*    |   VARNAME LEFT_PAREN FuncCall RIGHT_PAREN
+ |   VARNAME LEFT_PAREN RIGHT_PAREN      
+ 
+ Call requires LHS so I guess we can't do this here
+ 
+ */
+|   VARNAME LEFT_BRACKET Expr RIGHT_BRACKET {$$.u_expr=new ArrayAccess(new SymName($1.u_base_charptr), $3.u_expr);}
+;
+
+
+/*
+ 
+ "&&"			{return ANDAND; }
+ "=="			{return EQEQ; }
+ ">="			{return GTEQ; }
+ "<="			{return LTEQ; }
+ "!="			{return NE; }
+ "!"				{return NOT; }
+ "||"			{return OR; }
+ "="				{return EQ; }
+ ">"				{return GT; }
+ "<"				{return LT; }
+ */
+
+
+%%
+
+/** You shall not pass!
+ *  You should not  have to do or edit anything past this.
+ */
+
+
+extern int yylineno;
+
+void yyerror(const char *s)
+{
+    fprintf(stderr, "%s at line %d\n", s, yylineno);
+    return;
+}

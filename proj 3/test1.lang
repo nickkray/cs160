@@ -1,0 +1,65 @@
+procedure array(ax: integer) return boolean
+{
+  var a: string[12];
+  var b: string[12];
+  var x: integer;
+  var z: boolean;
+
+  a[2+3] = b[0];
+	
+  a[0] = x*7 + b[1];
+
+  z = array(ax);
+
+  return false;
+}
+
+procedure Main() return integer 
+{
+    var x: integer;
+    var k, j: integer;
+    var t: boolean;
+
+    x = 5;
+    if (x < 3) {
+        x = 7;
+    }
+    if (x <3) {
+        x = 9;
+    }
+    else {
+        if (t == true) {
+            x = 12;
+        }
+    }
+   
+    return 0;
+}
+
+procedure f(ax: integer) return boolean
+{
+    procedure nested() return boolean
+    {
+        var i,a: integer;
+	return j-a == 12;
+    }
+    var d: boolean;
+    return -(---k+j*k/x);
+}
+
+procedure main(ax: integer) return boolean
+{
+    procedure tain(int: integer) return boolean
+    {
+        return false || true;
+    }
+    var i: integer;
+    return (2+2*4) < 3;
+}
+
+procedure main1(ax: integer) return boolean
+{
+    var i: integer;
+    return (2+2*4) < 3;
+}
+

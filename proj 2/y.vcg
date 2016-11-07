@@ -1,0 +1,392 @@
+graph: {
+	display_edge_labels:	yes
+	priority_phase:	yes
+	port_sharing:	no
+	crossing_weight:	median
+	splines:	yes
+	node: {
+		title:	"0"
+		label:	"state  0\n $accept -> . Statements $end"
+	}
+	edge: {
+		sourcename:	"0"
+		targetname:	"1"
+		label:	"VAR"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"0"
+		targetname:	"2"
+		label:	"VARNAME"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"0"
+		targetname:	"3"
+		label:	"Statements"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"0"
+		targetname:	"4"
+		label:	"Statement"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"0"
+		targetname:	"5"
+		label:	"Lhs"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"1"
+		label:	"state  1\n Statement -> VAR . VAR_DEC_LHS COLON Type Array\n Statement -> VAR . VAR_DEC_LHS COLON Type"
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"6"
+		label:	"VARNAME"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"1"
+		targetname:	"7"
+		label:	"VAR_DEC_LHS"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"2"
+		label:	"state  2\n Lhs -> VARNAME .\n Lhs -> VARNAME . Array"
+	}
+	edge: {
+		sourcename:	"2"
+		targetname:	"8"
+		label:	"LEFT_BRACKET"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"2"
+		targetname:	"9"
+		label:	"Array"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"3"
+		label:	"state  3\n $accept -> Statements . $end"
+	}
+	edge: {
+		sourcename:	"3"
+		targetname:	"10"
+		label:	"$end"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"4"
+		label:	"state  4\n Statements -> Statement . SEMI_COLON Statements\n Statements -> Statement . SEMI_COLON"
+	}
+	edge: {
+		sourcename:	"4"
+		targetname:	"11"
+		label:	"SEMI_COLON"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"5"
+		label:	"state  5\n Statement -> Lhs . EQ Expr"
+	}
+	edge: {
+		sourcename:	"5"
+		targetname:	"12"
+		label:	"EQ"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"6"
+		label:	"state  6\n VAR_DEC_LHS -> VARNAME . COMMA VAR_DEC_LHS\n VAR_DEC_LHS -> VARNAME ."
+	}
+	edge: {
+		sourcename:	"6"
+		targetname:	"13"
+		label:	"COMMA"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"7"
+		label:	"state  7\n Statement -> VAR VAR_DEC_LHS . COLON Type Array\n Statement -> VAR VAR_DEC_LHS . COLON Type"
+	}
+	edge: {
+		sourcename:	"7"
+		targetname:	"14"
+		label:	"COLON"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"8"
+		label:	"state  8\n Array -> LEFT_BRACKET . INT RIGHT_BRACKET"
+	}
+	edge: {
+		sourcename:	"8"
+		targetname:	"15"
+		label:	"INT"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"9"
+		label:	"state  9\n Lhs -> VARNAME Array ."
+	}
+	node: {
+		title:	"10"
+		label:	"state 10\n $accept -> Statements $end ."
+	}
+	node: {
+		title:	"11"
+		label:	"state 11\n Statements -> Statement SEMI_COLON . Statements\n Statements -> Statement SEMI_COLON ."
+	}
+	backedge: {
+		sourcename:	"11"
+		targetname:	"1"
+		label:	"VAR"
+		color:	blue
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"11"
+		targetname:	"2"
+		label:	"VARNAME"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"11"
+		targetname:	"16"
+		label:	"Statements"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"11"
+		targetname:	"4"
+		label:	"Statement"
+		color:	green
+		textcolor:	black
+	}
+	backedge: {
+		sourcename:	"11"
+		targetname:	"5"
+		label:	"Lhs"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"12"
+		label:	"state 12\n Statement -> Lhs EQ . Expr"
+	}
+	edge: {
+		sourcename:	"12"
+		targetname:	"17"
+		label:	"VARNAME"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"12"
+		targetname:	"18"
+		label:	"INT"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"12"
+		targetname:	"19"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"12"
+		targetname:	"20"
+		label:	"Expr"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"13"
+		label:	"state 13\n VAR_DEC_LHS -> VARNAME COMMA . VAR_DEC_LHS"
+	}
+	backedge: {
+		sourcename:	"13"
+		targetname:	"6"
+		label:	"VARNAME"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"13"
+		targetname:	"21"
+		label:	"VAR_DEC_LHS"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"14"
+		label:	"state 14\n Statement -> VAR VAR_DEC_LHS COLON . Type Array\n Statement -> VAR VAR_DEC_LHS COLON . Type"
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"22"
+		label:	"BOOL"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"23"
+		label:	"INT"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"24"
+		label:	"CHAR"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"25"
+		label:	"STRING"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"26"
+		label:	"Type"
+		color:	green
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"14"
+		targetname:	"27"
+		label:	"Primitive"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"15"
+		label:	"state 15\n Array -> LEFT_BRACKET INT . RIGHT_BRACKET"
+	}
+	edge: {
+		sourcename:	"15"
+		targetname:	"28"
+		label:	"RIGHT_BRACKET"
+		color:	blue
+		textcolor:	black
+	}
+	node: {
+		title:	"16"
+		label:	"state 16\n Statements -> Statement SEMI_COLON Statements ."
+	}
+	node: {
+		title:	"17"
+		label:	"state 17\n Expr -> VARNAME ."
+	}
+	node: {
+		title:	"18"
+		label:	"state 18\n Expr -> INT ."
+	}
+	node: {
+		title:	"19"
+		label:	"state 19\n Expr -> CHAR ."
+	}
+	node: {
+		title:	"20"
+		label:	"state 20\n Statement -> Lhs EQ Expr ."
+	}
+	node: {
+		title:	"21"
+		label:	"state 21\n VAR_DEC_LHS -> VARNAME COMMA VAR_DEC_LHS ."
+	}
+	node: {
+		title:	"22"
+		label:	"state 22\n Primitive -> BOOL ."
+	}
+	node: {
+		title:	"23"
+		label:	"state 23\n Primitive -> INT ."
+	}
+	node: {
+		title:	"24"
+		label:	"state 24\n Primitive -> CHAR ."
+	}
+	node: {
+		title:	"25"
+		label:	"state 25\n Primitive -> STRING ."
+	}
+	node: {
+		title:	"26"
+		label:	"state 26\n Statement -> VAR VAR_DEC_LHS COLON Type . Array\n Statement -> VAR VAR_DEC_LHS COLON Type ."
+	}
+	backedge: {
+		sourcename:	"26"
+		targetname:	"8"
+		label:	"LEFT_BRACKET"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"26"
+		targetname:	"29"
+		label:	"Array"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"27"
+		label:	"state 27\n Type -> Primitive . Array\n Type -> Primitive ."
+	}
+	backedge: {
+		sourcename:	"27"
+		targetname:	"8"
+		label:	"LEFT_BRACKET"
+		color:	blue
+		textcolor:	black
+	}
+	edge: {
+		sourcename:	"27"
+		targetname:	"30"
+		label:	"Array"
+		color:	green
+		textcolor:	black
+	}
+	node: {
+		title:	"28"
+		label:	"state 28\n Array -> LEFT_BRACKET INT RIGHT_BRACKET ."
+	}
+	node: {
+		title:	"29"
+		label:	"state 29\n Statement -> VAR VAR_DEC_LHS COLON Type Array ."
+	}
+	node: {
+		title:	"30"
+		label:	"state 30\n Type -> Primitive Array ."
+	}
+
+
+}
