@@ -13,6 +13,7 @@
     void yyerror(const char *);
 %}
 
+
 /* Enables verbose error messages */
 %error-verbose
 
@@ -141,11 +142,11 @@
 
 
 Program     :   Proc Procs
-            {
-                ast = new ProgramImpl($2.u_proc_list);
-                ($2.u_proc_list)->push_front($1.u_proc);
-            }
-            ;
+{
+    ast = new ProgramImpl($2.u_proc_list);
+    ($2.u_proc_list)->push_front($1.u_proc);
+}
+;
 /*
  
  Proc        :   PROCEDURE VARNAME LEFT_PAREN TypedParamList RIGHT_PAREN RET Primitive LEFT_BRACE Statements Return RIGHT_BRACE
@@ -154,58 +155,58 @@ Program     :   Proc Procs
  */
 
 Proc        :   PROCEDURE VARNAME LEFT_PAREN ParameterListOrNot RIGHT_PAREN RET Primitive LEFT_BRACE Structure RIGHT_BRACE
-            {
-                $$.u_proc=new ProcImpl(new SymName($2.u_base_charptr), $4.u_decl_list, $7.u_type, $9.u_procedure_block);
-            }
-            ;
+{
+    $$.u_proc=new ProcImpl(new SymName($2.u_base_charptr), $4.u_decl_list, $7.u_type, $9.u_procedure_block);
+}
+;
 
 ParameterListOrNot  :   TypedParamList
-                    {
-                        $$ = $1;
-                    }
-                    |
-                    {
-                        $$.u_decl_list=new std::list<Decl_ptr>();
-                        std::fprintf(stderr, "no parameter list.\n");
-                    }
-                    ;
+{
+    $$ = $1;
+}
+|
+{
+    $$.u_decl_list=new std::list<Decl_ptr>();
+    std::fprintf(stderr, "no parameter list.\n");
+}
+;
 
 
 
 TypedParamList  : Paramlist COLON Primitive
-                {
-                    $$.u_decl_list=new std::list<Decl_ptr>();
-                    ($$.u_decl_list)->push_back(new DeclImpl($1.u_symname_list, $3.u_type));
-                }
-                | Paramlist COLON Primitive SEMI_COLON TypedParamList
-                {
-                    ($5.u_decl_list)->push_front(new DeclImpl($1.u_symname_list,$3.u_type));
-                    $$ = $5;
-                }
-                ;
+{
+    $$.u_decl_list=new std::list<Decl_ptr>();
+    ($$.u_decl_list)->push_back(new DeclImpl($1.u_symname_list, $3.u_type));
+}
+| Paramlist COLON Primitive SEMI_COLON TypedParamList
+{
+    ($5.u_decl_list)->push_front(new DeclImpl($1.u_symname_list,$3.u_type));
+    $$ = $5;
+}
+;
 
 
 
 Paramlist   :   Paramlist COMMA VARNAME
-            {
-                $1.u_symname_list->push_back(new SymName($3.u_base_charptr));
-                $$ = $1;
-            }
-            |   VARNAME
-            {
-                $$.u_symname_list = new std::list<SymName_ptr>();
-                ($$.u_symname_list)->push_back(new SymName($1.u_base_charptr));
-            }
-            ;
+{
+    $1.u_symname_list->push_back(new SymName($3.u_base_charptr));
+    $$ = $1;
+}
+|   VARNAME
+{
+    $$.u_symname_list = new std::list<SymName_ptr>();
+    ($$.u_symname_list)->push_back(new SymName($1.u_base_charptr));
+}
+;
 
 
 
 
 Return      :   RET Expr SEMI_COLON
-            {
-                $$.u_return_stat = new Return($2.u_expr);
-            }
-            ;
+{
+    $$.u_return_stat = new Return($2.u_expr);
+}
+;
 
 /*
  Procedure_blockImpl(std::list<Decl_ptr> *p1, std::list<Proc_ptr> *p2, std::list<Stat_ptr> *p3, Return_stat *p4)  {
@@ -213,76 +214,76 @@ Return      :   RET Expr SEMI_COLON
  */
 
 Structure   :   Procs VarDecs Statements Return
-            {
-                std::fprintf(stderr, "Entering Proc structure.\n");
-                $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list, $2.u_decl_list, $3.u_stat_list, $4.u_return_stat);
-            }
-            |   Procs VarDecs Return
-            {
-                std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
-                $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list,$2.u_decl_list, new std::list<Stat_ptr>, $3.u_return_stat);
-            }
-            ;
+{
+    std::fprintf(stderr, "Entering Proc structure.\n");
+    $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list, $2.u_decl_list, $3.u_stat_list, $4.u_return_stat);
+}
+|   Procs VarDecs Return
+{
+    std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
+    $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list,$2.u_decl_list, new std::list<Stat_ptr>, $3.u_return_stat);
+}
+;
 
 Procs       :   Procs Proc
-            {
-                ($1.u_proc_list)->push_back($2.u_proc);
-                $$=$1;
-            }
-            |
-            {
-                $$.u_proc_list = new std::list<Proc_ptr>();
-                std::fprintf(stderr, "procedures done.\n");
-            }
-            ;
+{
+    ($1.u_proc_list)->push_back($2.u_proc);
+    $$=$1;
+}
+|
+{
+    $$.u_proc_list = new std::list<Proc_ptr>();
+    std::fprintf(stderr, "procedures done.\n");
+}
+;
 
 
 VarDecs     :   VarDecs VarDec
-            {
+{
     
     /*                ($$.u_decl_list)->push_back(new DeclImpl($3.u_symname_list, $5.u_type))   */
-                $1.u_decl_list->push_back($2.u_decl);
-                $$ = $1;
-            }
-            |
-            {
-                $$.u_decl_list = new std::list<Decl_ptr>();
-            }
-            ;
+    $1.u_decl_list->push_back($2.u_decl);
+    $$ = $1;
+}
+|
+{
+    $$.u_decl_list = new std::list<Decl_ptr>();
+}
+;
 
 
 
 VarDec      :   VAR VAR_DEC_LHS COLON StringType SEMI_COLON
-            {
-                $$.u_decl = new DeclImpl($2.u_symname_list, $4.u_type);
-            }
-            ;
+{
+    $$.u_decl = new DeclImpl($2.u_symname_list, $4.u_type);
+}
+;
 
 
 VAR_DEC_LHS :   VARNAME COMMA VAR_DEC_LHS
-            {
-                ($3.u_symname_list)->push_front(new SymName($1.u_base_charptr));
-                ($$.u_symname_list) = $3.u_symname_list;
-            }
-            |   VARNAME
-            {
-                ($$.u_symname_list) = new std::list<SymName_ptr>();
-                ($$.u_symname_list)->push_back(new SymName($1.u_base_charptr));
-            }
-            ;
+{
+    ($3.u_symname_list)->push_front(new SymName($1.u_base_charptr));
+    ($$.u_symname_list) = $3.u_symname_list;
+}
+|   VARNAME
+{
+    ($$.u_symname_list) = new std::list<SymName_ptr>();
+    ($$.u_symname_list)->push_back(new SymName($1.u_base_charptr));
+}
+;
 
 
 Statements  :   Statements Statement
-            {
-                $1.u_stat_list->push_back($2.u_stat);
-                $$ = $1;
-            }
-            |   Statement
-            {
-                $$.u_stat_list = new std::list<Stat_ptr>();
-                $$.u_stat_list -> push_back($1.u_stat);
-            }
-            ;
+{
+    $1.u_stat_list->push_back($2.u_stat);
+    $$ = $1;
+}
+|   Statement
+{
+    $$.u_stat_list = new std::list<Stat_ptr>();
+    $$.u_stat_list -> push_back($1.u_stat);
+}
+;
 
 /*
  
@@ -322,12 +323,12 @@ Statement   :   VARNAME ArrayIndex EQ Expr SEMI_COLON
     $$.u_stat = new Assignment(new DerefVariable(new SymName($1.u_base_charptr)), $4.u_expr)
 }
 |   IF_WHILE
-  
+
 |   CodeBlock
 {
     $$.u_stat = new CodeBlock($1.u_nested_block);
 }
-  
+
 ;
 
 
@@ -462,7 +463,7 @@ Value       :   VARNAME { $$.u_expr=new Ident(new SymName($1.u_base_charptr));}
 |   NULLTOKEN           {$$.u_expr=new IntLit(new Primitive($1.u_base_int)); }
 |   XOR VARNAME         {$$.u_expr=new Deref(new Ident(new SymName($2.u_base_charptr)));}
 /*    |   VARNAME LEFT_PAREN FuncCall RIGHT_PAREN
- |   VARNAME LEFT_PAREN RIGHT_PAREN      
+ |   VARNAME LEFT_PAREN RIGHT_PAREN
  
  Call requires LHS so I guess we can't do this here
  
@@ -488,15 +489,15 @@ Value       :   VARNAME { $$.u_expr=new Ident(new SymName($1.u_base_charptr));}
 
 %%
 
+
 /** You shall not pass!
  *  You should not  have to do or edit anything past this.
  */
-
 
 extern int yylineno;
 
 void yyerror(const char *s)
 {
     fprintf(stderr, "%s at line %d\n", s, yylineno);
-    return;
+    exit(1);
 }

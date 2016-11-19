@@ -536,14 +536,14 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   143,   143,   156,   162,   167,   175,   180,   189,   194,
-     204,   215,   220,   227,   233,   240,   248,   255,   262,   267,
-     275,   280,   298,   302,   308,   312,   316,   320,   324,   326,
-     335,   340,   365,   369,   373,   379,   383,   390,   394,   400,
-     401,   402,   403,   404,   408,   414,   415,   416,   417,   418,
-     419,   420,   421,   422,   423,   424,   425,   426,   427,   428,
-     429,   430,   455,   456,   457,   458,   459,   460,   461,   462,
-     463,   470
+       0,   144,   144,   157,   163,   168,   176,   181,   190,   195,
+     205,   216,   221,   228,   234,   241,   249,   256,   263,   268,
+     276,   281,   299,   303,   309,   313,   317,   321,   325,   327,
+     336,   341,   366,   370,   374,   380,   384,   391,   395,   401,
+     402,   403,   404,   405,   409,   415,   416,   417,   418,   419,
+     420,   421,   422,   423,   424,   425,   426,   427,   428,   429,
+     430,   431,   456,   457,   458,   459,   460,   461,   462,   463,
+     464,   471
 };
 #endif
 
@@ -1593,171 +1593,171 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 144 "parser.ypp"
+#line 145 "parser.ypp"
     {
-                ast = new ProgramImpl((yyvsp[(2) - (2)]).u_proc_list);
-                ((yyvsp[(2) - (2)]).u_proc_list)->push_front((yyvsp[(1) - (2)]).u_proc);
-            ;}
+    ast = new ProgramImpl((yyvsp[(2) - (2)]).u_proc_list);
+    ((yyvsp[(2) - (2)]).u_proc_list)->push_front((yyvsp[(1) - (2)]).u_proc);
+;}
     break;
 
   case 3:
-#line 157 "parser.ypp"
+#line 158 "parser.ypp"
     {
-                (yyval).u_proc=new ProcImpl(new SymName((yyvsp[(2) - (10)]).u_base_charptr), (yyvsp[(4) - (10)]).u_decl_list, (yyvsp[(7) - (10)]).u_type, (yyvsp[(9) - (10)]).u_procedure_block);
-            ;}
+    (yyval).u_proc=new ProcImpl(new SymName((yyvsp[(2) - (10)]).u_base_charptr), (yyvsp[(4) - (10)]).u_decl_list, (yyvsp[(7) - (10)]).u_type, (yyvsp[(9) - (10)]).u_procedure_block);
+;}
     break;
 
   case 4:
-#line 163 "parser.ypp"
+#line 164 "parser.ypp"
     {
-                        (yyval) = (yyvsp[(1) - (1)]);
-                    ;}
+    (yyval) = (yyvsp[(1) - (1)]);
+;}
     break;
 
   case 5:
-#line 167 "parser.ypp"
+#line 168 "parser.ypp"
     {
-                        (yyval).u_decl_list=new std::list<Decl_ptr>();
-                        std::fprintf(stderr, "no parameter list.\n");
-                    ;}
+    (yyval).u_decl_list=new std::list<Decl_ptr>();
+    std::fprintf(stderr, "no parameter list.\n");
+;}
     break;
 
   case 6:
-#line 176 "parser.ypp"
+#line 177 "parser.ypp"
     {
-                    (yyval).u_decl_list=new std::list<Decl_ptr>();
-                    ((yyval).u_decl_list)->push_back(new DeclImpl((yyvsp[(1) - (3)]).u_symname_list, (yyvsp[(3) - (3)]).u_type));
-                ;}
+    (yyval).u_decl_list=new std::list<Decl_ptr>();
+    ((yyval).u_decl_list)->push_back(new DeclImpl((yyvsp[(1) - (3)]).u_symname_list, (yyvsp[(3) - (3)]).u_type));
+;}
     break;
 
   case 7:
-#line 181 "parser.ypp"
+#line 182 "parser.ypp"
     {
-                    ((yyvsp[(5) - (5)]).u_decl_list)->push_front(new DeclImpl((yyvsp[(1) - (5)]).u_symname_list,(yyvsp[(3) - (5)]).u_type));
-                    (yyval) = (yyvsp[(5) - (5)]);
-                ;}
+    ((yyvsp[(5) - (5)]).u_decl_list)->push_front(new DeclImpl((yyvsp[(1) - (5)]).u_symname_list,(yyvsp[(3) - (5)]).u_type));
+    (yyval) = (yyvsp[(5) - (5)]);
+;}
     break;
 
   case 8:
-#line 190 "parser.ypp"
+#line 191 "parser.ypp"
     {
-                (yyvsp[(1) - (3)]).u_symname_list->push_back(new SymName((yyvsp[(3) - (3)]).u_base_charptr));
-                (yyval) = (yyvsp[(1) - (3)]);
-            ;}
+    (yyvsp[(1) - (3)]).u_symname_list->push_back(new SymName((yyvsp[(3) - (3)]).u_base_charptr));
+    (yyval) = (yyvsp[(1) - (3)]);
+;}
     break;
 
   case 9:
-#line 195 "parser.ypp"
+#line 196 "parser.ypp"
     {
-                (yyval).u_symname_list = new std::list<SymName_ptr>();
-                ((yyval).u_symname_list)->push_back(new SymName((yyvsp[(1) - (1)]).u_base_charptr));
-            ;}
+    (yyval).u_symname_list = new std::list<SymName_ptr>();
+    ((yyval).u_symname_list)->push_back(new SymName((yyvsp[(1) - (1)]).u_base_charptr));
+;}
     break;
 
   case 10:
-#line 205 "parser.ypp"
+#line 206 "parser.ypp"
     {
-                (yyval).u_return_stat = new Return((yyvsp[(2) - (3)]).u_expr);
-            ;}
+    (yyval).u_return_stat = new Return((yyvsp[(2) - (3)]).u_expr);
+;}
     break;
 
   case 11:
-#line 216 "parser.ypp"
+#line 217 "parser.ypp"
     {
-                std::fprintf(stderr, "Entering Proc structure.\n");
-                (yyval).u_procedure_block = new Procedure_blockImpl((yyvsp[(1) - (4)]).u_proc_list, (yyvsp[(2) - (4)]).u_decl_list, (yyvsp[(3) - (4)]).u_stat_list, (yyvsp[(4) - (4)]).u_return_stat);
-            ;}
+    std::fprintf(stderr, "Entering Proc structure.\n");
+    (yyval).u_procedure_block = new Procedure_blockImpl((yyvsp[(1) - (4)]).u_proc_list, (yyvsp[(2) - (4)]).u_decl_list, (yyvsp[(3) - (4)]).u_stat_list, (yyvsp[(4) - (4)]).u_return_stat);
+;}
     break;
 
   case 12:
-#line 221 "parser.ypp"
+#line 222 "parser.ypp"
     {
-                std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
-                (yyval).u_procedure_block = new Procedure_blockImpl((yyvsp[(1) - (3)]).u_proc_list,(yyvsp[(2) - (3)]).u_decl_list, new std::list<Stat_ptr>, (yyvsp[(3) - (3)]).u_return_stat);
-            ;}
+    std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
+    (yyval).u_procedure_block = new Procedure_blockImpl((yyvsp[(1) - (3)]).u_proc_list,(yyvsp[(2) - (3)]).u_decl_list, new std::list<Stat_ptr>, (yyvsp[(3) - (3)]).u_return_stat);
+;}
     break;
 
   case 13:
-#line 228 "parser.ypp"
+#line 229 "parser.ypp"
     {
-                ((yyvsp[(1) - (2)]).u_proc_list)->push_back((yyvsp[(2) - (2)]).u_proc);
-                (yyval)=(yyvsp[(1) - (2)]);
-            ;}
+    ((yyvsp[(1) - (2)]).u_proc_list)->push_back((yyvsp[(2) - (2)]).u_proc);
+    (yyval)=(yyvsp[(1) - (2)]);
+;}
     break;
 
   case 14:
-#line 233 "parser.ypp"
+#line 234 "parser.ypp"
     {
-                (yyval).u_proc_list = new std::list<Proc_ptr>();
-                std::fprintf(stderr, "procedures done.\n");
-            ;}
+    (yyval).u_proc_list = new std::list<Proc_ptr>();
+    std::fprintf(stderr, "procedures done.\n");
+;}
     break;
 
   case 15:
-#line 241 "parser.ypp"
+#line 242 "parser.ypp"
     {
     
     /*                ($$.u_decl_list)->push_back(new DeclImpl($3.u_symname_list, $5.u_type))   */
-                (yyvsp[(1) - (2)]).u_decl_list->push_back((yyvsp[(2) - (2)]).u_decl);
-                (yyval) = (yyvsp[(1) - (2)]);
-            ;}
+    (yyvsp[(1) - (2)]).u_decl_list->push_back((yyvsp[(2) - (2)]).u_decl);
+    (yyval) = (yyvsp[(1) - (2)]);
+;}
     break;
 
   case 16:
-#line 248 "parser.ypp"
+#line 249 "parser.ypp"
     {
-                (yyval).u_decl_list = new std::list<Decl_ptr>();
-            ;}
+    (yyval).u_decl_list = new std::list<Decl_ptr>();
+;}
     break;
 
   case 17:
-#line 256 "parser.ypp"
+#line 257 "parser.ypp"
     {
-                (yyval).u_decl = new DeclImpl((yyvsp[(2) - (5)]).u_symname_list, (yyvsp[(4) - (5)]).u_type);
-            ;}
+    (yyval).u_decl = new DeclImpl((yyvsp[(2) - (5)]).u_symname_list, (yyvsp[(4) - (5)]).u_type);
+;}
     break;
 
   case 18:
-#line 263 "parser.ypp"
+#line 264 "parser.ypp"
     {
-                ((yyvsp[(3) - (3)]).u_symname_list)->push_front(new SymName((yyvsp[(1) - (3)]).u_base_charptr));
-                ((yyval).u_symname_list) = (yyvsp[(3) - (3)]).u_symname_list;
-            ;}
+    ((yyvsp[(3) - (3)]).u_symname_list)->push_front(new SymName((yyvsp[(1) - (3)]).u_base_charptr));
+    ((yyval).u_symname_list) = (yyvsp[(3) - (3)]).u_symname_list;
+;}
     break;
 
   case 19:
-#line 268 "parser.ypp"
+#line 269 "parser.ypp"
     {
-                ((yyval).u_symname_list) = new std::list<SymName_ptr>();
-                ((yyval).u_symname_list)->push_back(new SymName((yyvsp[(1) - (1)]).u_base_charptr));
-            ;}
+    ((yyval).u_symname_list) = new std::list<SymName_ptr>();
+    ((yyval).u_symname_list)->push_back(new SymName((yyvsp[(1) - (1)]).u_base_charptr));
+;}
     break;
 
   case 20:
-#line 276 "parser.ypp"
+#line 277 "parser.ypp"
     {
-                (yyvsp[(1) - (2)]).u_stat_list->push_back((yyvsp[(2) - (2)]).u_stat);
-                (yyval) = (yyvsp[(1) - (2)]);
-            ;}
+    (yyvsp[(1) - (2)]).u_stat_list->push_back((yyvsp[(2) - (2)]).u_stat);
+    (yyval) = (yyvsp[(1) - (2)]);
+;}
     break;
 
   case 21:
-#line 281 "parser.ypp"
+#line 282 "parser.ypp"
     {
-                (yyval).u_stat_list = new std::list<Stat_ptr>();
-                (yyval).u_stat_list -> push_back((yyvsp[(1) - (1)]).u_stat);
-            ;}
+    (yyval).u_stat_list = new std::list<Stat_ptr>();
+    (yyval).u_stat_list -> push_back((yyvsp[(1) - (1)]).u_stat);
+;}
     break;
 
   case 22:
-#line 299 "parser.ypp"
+#line 300 "parser.ypp"
     {
     (yyval).u_stat = new Assignment(new ArrayElement(new SymName((yyvsp[(1) - (5)]).u_base_charptr), (yyvsp[(2) - (5)]).u_expr), (yyvsp[(4) - (5)]).u_expr);
 ;}
     break;
 
   case 23:
-#line 303 "parser.ypp"
+#line 304 "parser.ypp"
     {
     
     (yyval).u_stat = new StringAssignment(new Variable(new SymName((yyvsp[(1) - (4)]).u_base_charptr)), new StringPrimitive((yyvsp[(3) - (4)]).u_base_charptr));
@@ -1766,42 +1766,42 @@ yyreduce:
     break;
 
   case 24:
-#line 309 "parser.ypp"
+#line 310 "parser.ypp"
     {
     (yyval).u_stat = new Assignment(new Variable(new SymName((yyvsp[(1) - (4)]).u_base_charptr)), (yyvsp[(3) - (4)]).u_expr)
 ;}
     break;
 
   case 25:
-#line 313 "parser.ypp"
+#line 314 "parser.ypp"
     {
     (yyval).u_stat=new Call(new Variable(new SymName((yyvsp[(1) - (7)]).u_base_charptr)),new SymName((yyvsp[(3) - (7)]).u_base_charptr), (yyvsp[(5) - (7)]).u_expr_list);
 ;}
     break;
 
   case 26:
-#line 317 "parser.ypp"
+#line 318 "parser.ypp"
     {
     (yyval).u_stat=new Call(new Variable(new SymName((yyvsp[(1) - (6)]).u_base_charptr)),new SymName((yyvsp[(3) - (6)]).u_base_charptr), new std::list<Expr_ptr>());
 ;}
     break;
 
   case 27:
-#line 321 "parser.ypp"
+#line 322 "parser.ypp"
     {
     (yyval).u_stat = new Assignment(new DerefVariable(new SymName((yyvsp[(1) - (5)]).u_base_charptr)), (yyvsp[(4) - (5)]).u_expr)
 ;}
     break;
 
   case 29:
-#line 327 "parser.ypp"
+#line 328 "parser.ypp"
     {
     (yyval).u_stat = new CodeBlock((yyvsp[(1) - (1)]).u_nested_block);
 ;}
     break;
 
   case 30:
-#line 336 "parser.ypp"
+#line 337 "parser.ypp"
     {
     (yyvsp[(3) - (3)]).u_expr_list->push_back((yyvsp[(1) - (3)]).u_expr);
     (yyval) = (yyvsp[(3) - (3)]);
@@ -1809,7 +1809,7 @@ yyreduce:
     break;
 
   case 31:
-#line 341 "parser.ypp"
+#line 342 "parser.ypp"
     {
     (yyval).u_expr_list = new std::list<Expr_ptr>();
     (yyval).u_expr_list->push_back((yyvsp[(1) - (1)]).u_expr);
@@ -1817,218 +1817,218 @@ yyreduce:
     break;
 
   case 32:
-#line 366 "parser.ypp"
+#line 367 "parser.ypp"
     {
     (yyval).u_stat = new IfWithElse((yyvsp[(3) - (7)]).u_expr, (yyvsp[(5) - (7)]).u_nested_block, (yyvsp[(7) - (7)]).u_nested_block);
 ;}
     break;
 
   case 33:
-#line 370 "parser.ypp"
+#line 371 "parser.ypp"
     {
     (yyval).u_stat = new IfNoElse((yyvsp[(3) - (5)]).u_expr, (yyvsp[(5) - (5)]).u_nested_block);
 ;}
     break;
 
   case 34:
-#line 374 "parser.ypp"
+#line 375 "parser.ypp"
     {
     (yyval).u_stat = new WhileLoop((yyvsp[(3) - (5)]).u_expr, (yyvsp[(5) - (5)]).u_nested_block);
 ;}
     break;
 
   case 35:
-#line 380 "parser.ypp"
+#line 381 "parser.ypp"
     {
     (yyval).u_nested_block = new Nested_blockImpl((yyvsp[(2) - (4)]).u_decl_list, (yyvsp[(3) - (4)]).u_stat_list);
 ;}
     break;
 
   case 36:
-#line 384 "parser.ypp"
+#line 385 "parser.ypp"
     {
     (yyval).u_nested_block = new Nested_blockImpl(new std::list<Decl_ptr>(), new std::list<Stat_ptr>());
 ;}
     break;
 
   case 37:
-#line 391 "parser.ypp"
+#line 392 "parser.ypp"
     {
     (yyval) = (yyvsp[(1) - (1)]);
 ;}
     break;
 
   case 38:
-#line 395 "parser.ypp"
+#line 396 "parser.ypp"
     {
     (yyval).u_type = new TString(new Primitive((yyvsp[(3) - (4)]).u_base_int));                                   /* TODO */
 ;}
     break;
 
   case 39:
-#line 400 "parser.ypp"
+#line 401 "parser.ypp"
     {(yyval).u_type = new TInteger();;}
     break;
 
   case 40:
-#line 401 "parser.ypp"
+#line 402 "parser.ypp"
     {(yyval).u_type = new TCharacter();;}
     break;
 
   case 41:
-#line 402 "parser.ypp"
+#line 403 "parser.ypp"
     {(yyval).u_type = new TCharPtr();;}
     break;
 
   case 42:
-#line 403 "parser.ypp"
+#line 404 "parser.ypp"
     {(yyval).u_type = new TIntPtr();;}
     break;
 
   case 43:
-#line 404 "parser.ypp"
+#line 405 "parser.ypp"
     {(yyval).u_type = new TBoolean();;}
     break;
 
   case 44:
-#line 409 "parser.ypp"
+#line 410 "parser.ypp"
     {
     (yyval).u_expr = (yyvsp[(2) - (3)]).u_expr;
 ;}
     break;
 
   case 45:
-#line 414 "parser.ypp"
+#line 415 "parser.ypp"
     {(yyval).u_expr = (yyvsp[(1) - (1)]).u_expr;;}
     break;
 
   case 46:
-#line 415 "parser.ypp"
+#line 416 "parser.ypp"
     {(yyval).u_expr = new Compare((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 47:
-#line 416 "parser.ypp"
+#line 417 "parser.ypp"
     {(yyval).u_expr = new Gt((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 48:
-#line 417 "parser.ypp"
+#line 418 "parser.ypp"
     {(yyval).u_expr = new Lt((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 49:
-#line 418 "parser.ypp"
+#line 419 "parser.ypp"
     {(yyval).u_expr = new Lteq((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 50:
-#line 419 "parser.ypp"
+#line 420 "parser.ypp"
     {(yyval).u_expr = new Or((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 51:
-#line 420 "parser.ypp"
+#line 421 "parser.ypp"
     {(yyval).u_expr = new Noteq((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 52:
-#line 421 "parser.ypp"
+#line 422 "parser.ypp"
     {(yyval).u_expr = new And((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 53:
-#line 422 "parser.ypp"
+#line 423 "parser.ypp"
     {(yyval).u_expr = new Plus((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 54:
-#line 423 "parser.ypp"
+#line 424 "parser.ypp"
     {(yyval).u_expr = new Minus((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 55:
-#line 424 "parser.ypp"
+#line 425 "parser.ypp"
     {(yyval).u_expr = new Times((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 56:
-#line 425 "parser.ypp"
+#line 426 "parser.ypp"
     {(yyval).u_expr = new Div((yyvsp[(1) - (3)]).u_expr, (yyvsp[(3) - (3)]).u_expr);;}
     break;
 
   case 57:
-#line 426 "parser.ypp"
+#line 427 "parser.ypp"
     {(yyval).u_expr = new AbsoluteValue((yyvsp[(2) - (3)]).u_expr);;}
     break;
 
   case 58:
-#line 427 "parser.ypp"
+#line 428 "parser.ypp"
     {(yyval).u_expr=new Deref((yyvsp[(3) - (4)]).u_expr);;}
     break;
 
   case 59:
-#line 428 "parser.ypp"
+#line 429 "parser.ypp"
     {(yyval).u_expr = new Not((yyvsp[(2) - (2)]).u_expr);;}
     break;
 
   case 60:
-#line 429 "parser.ypp"
+#line 430 "parser.ypp"
     {(yyval).u_expr = new Uminus((yyvsp[(2) - (2)]).u_expr);;}
     break;
 
   case 61:
-#line 430 "parser.ypp"
+#line 431 "parser.ypp"
     {(yyval).u_expr = ((yyvsp[(2) - (3)]).u_expr);;}
     break;
 
   case 62:
-#line 455 "parser.ypp"
+#line 456 "parser.ypp"
     { (yyval).u_expr=new Ident(new SymName((yyvsp[(1) - (1)]).u_base_charptr));;}
     break;
 
   case 63:
-#line 456 "parser.ypp"
+#line 457 "parser.ypp"
     {(yyval).u_expr = new AddressOf(new ArrayElement(new SymName((yyvsp[(2) - (3)]).u_base_charptr), (yyvsp[(3) - (3)]).u_expr));;}
     break;
 
   case 64:
-#line 457 "parser.ypp"
+#line 458 "parser.ypp"
     {(yyval).u_expr= new AddressOf(new Variable(new SymName((yyvsp[(2) - (2)]).u_base_charptr)));;}
     break;
 
   case 65:
-#line 458 "parser.ypp"
+#line 459 "parser.ypp"
     {(yyval).u_expr=new IntLit(new Primitive((yyvsp[(1) - (1)]).u_base_int)); ;}
     break;
 
   case 66:
-#line 459 "parser.ypp"
+#line 460 "parser.ypp"
     {(yyval).u_expr=new CharLit(new Primitive((yyvsp[(1) - (1)]).u_base_int)); ;}
     break;
 
   case 67:
-#line 460 "parser.ypp"
-    {(yyval).u_expr=new BoolLit(new Primitive((yyvsp[(1) - (1)]).u_base_int));;}
-    break;
-
-  case 68:
 #line 461 "parser.ypp"
     {(yyval).u_expr=new BoolLit(new Primitive((yyvsp[(1) - (1)]).u_base_int));;}
     break;
 
-  case 69:
+  case 68:
 #line 462 "parser.ypp"
+    {(yyval).u_expr=new BoolLit(new Primitive((yyvsp[(1) - (1)]).u_base_int));;}
+    break;
+
+  case 69:
+#line 463 "parser.ypp"
     {(yyval).u_expr=new IntLit(new Primitive((yyvsp[(1) - (1)]).u_base_int)); ;}
     break;
 
   case 70:
-#line 463 "parser.ypp"
+#line 464 "parser.ypp"
     {(yyval).u_expr=new Deref(new Ident(new SymName((yyvsp[(2) - (2)]).u_base_charptr)));;}
     break;
 
   case 71:
-#line 470 "parser.ypp"
+#line 471 "parser.ypp"
     {(yyval).u_expr=new ArrayAccess(new SymName((yyvsp[(1) - (4)]).u_base_charptr), (yyvsp[(3) - (4)]).u_expr);;}
     break;
 
@@ -2248,19 +2248,19 @@ yyreturn:
 }
 
 
-#line 489 "parser.ypp"
+#line 490 "parser.ypp"
+
 
 
 /** You shall not pass!
  *  You should not  have to do or edit anything past this.
  */
 
-
 extern int yylineno;
 
 void yyerror(const char *s)
 {
     fprintf(stderr, "%s at line %d\n", s, yylineno);
-    return;
+    exit(1);
 }
 

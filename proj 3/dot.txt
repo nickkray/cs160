@@ -1,101 +1,454 @@
 procedure
 (){var
 var
-}digraph G { page="8.5,11"; size="7.5, 10"; 
+var
+var
+()}procedure
+(){var
+var
+var
+(){}(){}{(){}}}procedure
+(){procedure
+(){var
+}var
+()}procedure
+(){procedure
+(){}var
+()}procedure
+(){var
+()}digraph G { page="8.5,11"; size="7.5, 10"; 
 "0" -> "1"
 "1" [label="ProgramImpl"]
 "1" -> "2"
 "2" [label="ProcImpl"]
 "2" -> "3"
-"3" [label="SymName\n\"Main\""]
+"3" [label="SymName\n\"array\""]
 "2" -> "4"
 "4" [label="DeclImpl"]
 "4" -> "5"
-"5" [label="SymName\n\"x\""]
+"5" [label="SymName\n\"ax\""]
 "4" -> "6"
 "6" [label="TInteger"]
 "2" -> "7"
-"7" [label="DeclImpl"]
-"7" -> "8"
-"8" [label="SymName\n\"y\""]
-"7" -> "9"
-"9" [label="TCharacter"]
-"2" -> "10"
-"10" [label="TBoolean"]
-"2" -> "11"
-"11" [label="ProcedureBlockImpl"]
+"7" [label="TBoolean"]
+"2" -> "8"
+"8" [label="ProcedureBlockImpl"]
+"8" -> "9"
+"9" [label="DeclImpl"]
+"9" -> "10"
+"10" [label="SymName\n\"a\""]
+"9" -> "11"
+"11" [label="TString"]
 "11" -> "12"
-"12" [label="DeclImpl"]
-"12" -> "13"
-"13" [label="SymName\n\"z\""]
-"12" -> "14"
-"14" [label="SymName\n\"tr\""]
-"12" -> "15"
+"12" [label="Primitive\n12"]
+"8" -> "13"
+"13" [label="DeclImpl"]
+"13" -> "14"
+"14" [label="SymName\n\"b\""]
+"13" -> "15"
 "15" [label="TString"]
 "15" -> "16"
-"16" [label="Primitive\n7"]
-"11" -> "17"
+"16" [label="Primitive\n12"]
+"8" -> "17"
 "17" [label="DeclImpl"]
 "17" -> "18"
-"18" [label="SymName\n\"c\""]
+"18" [label="SymName\n\"x\""]
 "17" -> "19"
-"19" [label="TCharacter"]
-"11" -> "20"
-"20" [label="Assignment"]
+"19" [label="TInteger"]
+"8" -> "20"
+"20" [label="DeclImpl"]
 "20" -> "21"
-"21" [label="Variable"]
-"21" -> "22"
-"22" [label="SymName\n\"c\""]
-"20" -> "23"
-"23" [label="CharLit"]
+"21" [label="SymName\n\"z\""]
+"20" -> "22"
+"22" [label="TBoolean"]
+"8" -> "23"
+"23" [label="Assignment"]
 "23" -> "24"
-"24" [label="Primitive\n120"]
-"11" -> "25"
-"25" [label="StringAssignment"]
-"25" -> "26"
-"26" [label="Variable"]
+"24" [label="ArrayElement"]
+"24" -> "25"
+"25" [label="SymName\n\"a\""]
+"24" -> "26"
+"26" [label="Plus"]
 "26" -> "27"
-"27" [label="SymName\n\"z\""]
-"25" -> "28"
-"28" [label="StringPrimitive\n\""hello world"\""]
-"11" -> "29"
-"29" [label="StringAssignment"]
+"27" [label="IntLit"]
+"27" -> "28"
+"28" [label="Primitive\n2"]
+"26" -> "29"
+"29" [label="IntLit"]
 "29" -> "30"
-"30" [label="Variable"]
-"30" -> "31"
-"31" [label="SymName\n\"tr\""]
-"29" -> "32"
-"32" [label="StringPrimitive\n\"""\""]
-"11" -> "33"
-"33" [label="Assignment"]
+"30" [label="Primitive\n3"]
+"23" -> "31"
+"31" [label="ArrayAccess"]
+"31" -> "32"
+"32" [label="SymName\n\"b\""]
+"31" -> "33"
+"33" [label="IntLit"]
 "33" -> "34"
-"34" [label="ArrayElement"]
-"34" -> "35"
-"35" [label="SymName\n\"z\""]
-"34" -> "36"
-"36" [label="Minus"]
+"34" [label="Primitive\n0"]
+"8" -> "35"
+"35" [label="Assignment"]
+"35" -> "36"
+"36" [label="ArrayElement"]
 "36" -> "37"
-"37" [label="IntLit"]
-"37" -> "38"
-"38" [label="Primitive\n3"]
-"36" -> "39"
-"39" [label="IntLit"]
-"39" -> "40"
-"40" [label="Primitive\n2"]
-"33" -> "41"
-"41" [label="Ident"]
+"37" [label="SymName\n\"a\""]
+"36" -> "38"
+"38" [label="IntLit"]
+"38" -> "39"
+"39" [label="Primitive\n0"]
+"35" -> "40"
+"40" [label="Plus"]
+"40" -> "41"
+"41" [label="Times"]
 "41" -> "42"
-"42" [label="SymName\n\"c\""]
-"11" -> "43"
-"43" [label="Return"]
-"43" -> "44"
-"44" [label="Noteq"]
+"42" [label="Ident"]
+"42" -> "43"
+"43" [label="SymName\n\"x\""]
+"41" -> "44"
+"44" [label="IntLit"]
 "44" -> "45"
-"45" [label="CharLit"]
-"45" -> "46"
-"46" [label="Primitive\n100"]
-"44" -> "47"
-"47" [label="CharLit"]
-"47" -> "48"
-"48" [label="Primitive\n99"]
+"45" [label="Primitive\n7"]
+"40" -> "46"
+"46" [label="ArrayAccess"]
+"46" -> "47"
+"47" [label="SymName\n\"b\""]
+"46" -> "48"
+"48" [label="IntLit"]
+"48" -> "49"
+"49" [label="Primitive\n1"]
+"8" -> "50"
+"50" [label="Call"]
+"50" -> "51"
+"51" [label="Variable"]
+"51" -> "52"
+"52" [label="SymName\n\"z\""]
+"50" -> "53"
+"53" [label="SymName\n\"array\""]
+"50" -> "54"
+"54" [label="Ident"]
+"54" -> "55"
+"55" [label="SymName\n\"ax\""]
+"8" -> "56"
+"56" [label="Return"]
+"56" -> "57"
+"57" [label="BoolLit"]
+"57" -> "58"
+"58" [label="Primitive\n0"]
+"1" -> "59"
+"59" [label="ProcImpl"]
+"59" -> "60"
+"60" [label="SymName\n\"Main\""]
+"59" -> "61"
+"61" [label="TInteger"]
+"59" -> "62"
+"62" [label="ProcedureBlockImpl"]
+"62" -> "63"
+"63" [label="DeclImpl"]
+"63" -> "64"
+"64" [label="SymName\n\"x\""]
+"63" -> "65"
+"65" [label="TInteger"]
+"62" -> "66"
+"66" [label="DeclImpl"]
+"66" -> "67"
+"67" [label="SymName\n\"k\""]
+"66" -> "68"
+"68" [label="SymName\n\"j\""]
+"66" -> "69"
+"69" [label="TInteger"]
+"62" -> "70"
+"70" [label="DeclImpl"]
+"70" -> "71"
+"71" [label="SymName\n\"t\""]
+"70" -> "72"
+"72" [label="TBoolean"]
+"62" -> "73"
+"73" [label="Assignment"]
+"73" -> "74"
+"74" [label="Variable"]
+"74" -> "75"
+"75" [label="SymName\n\"x\""]
+"73" -> "76"
+"76" [label="IntLit"]
+"76" -> "77"
+"77" [label="Primitive\n5"]
+"62" -> "78"
+"78" [label="IfNoElse"]
+"78" -> "79"
+"79" [label="Lt"]
+"79" -> "80"
+"80" [label="Ident"]
+"80" -> "81"
+"81" [label="SymName\n\"x\""]
+"79" -> "82"
+"82" [label="IntLit"]
+"82" -> "83"
+"83" [label="Primitive\n3"]
+"78" -> "84"
+"84" [label="NestedBlockImpl"]
+"84" -> "85"
+"85" [label="Assignment"]
+"85" -> "86"
+"86" [label="Variable"]
+"86" -> "87"
+"87" [label="SymName\n\"x\""]
+"85" -> "88"
+"88" [label="IntLit"]
+"88" -> "89"
+"89" [label="Primitive\n7"]
+"62" -> "90"
+"90" [label="IfWithElse"]
+"90" -> "91"
+"91" [label="Lt"]
+"91" -> "92"
+"92" [label="Ident"]
+"92" -> "93"
+"93" [label="SymName\n\"x\""]
+"91" -> "94"
+"94" [label="IntLit"]
+"94" -> "95"
+"95" [label="Primitive\n3"]
+"90" -> "96"
+"96" [label="NestedBlockImpl"]
+"96" -> "97"
+"97" [label="Assignment"]
+"97" -> "98"
+"98" [label="Variable"]
+"98" -> "99"
+"99" [label="SymName\n\"x\""]
+"97" -> "100"
+"100" [label="IntLit"]
+"100" -> "101"
+"101" [label="Primitive\n9"]
+"90" -> "102"
+"102" [label="NestedBlockImpl"]
+"102" -> "103"
+"103" [label="IfNoElse"]
+"103" -> "104"
+"104" [label="Compare"]
+"104" -> "105"
+"105" [label="Ident"]
+"105" -> "106"
+"106" [label="SymName\n\"t\""]
+"104" -> "107"
+"107" [label="BoolLit"]
+"107" -> "108"
+"108" [label="Primitive\n1"]
+"103" -> "109"
+"109" [label="NestedBlockImpl"]
+"109" -> "110"
+"110" [label="Assignment"]
+"110" -> "111"
+"111" [label="Variable"]
+"111" -> "112"
+"112" [label="SymName\n\"x\""]
+"110" -> "113"
+"113" [label="IntLit"]
+"113" -> "114"
+"114" [label="Primitive\n12"]
+"62" -> "115"
+"115" [label="Return"]
+"115" -> "116"
+"116" [label="IntLit"]
+"116" -> "117"
+"117" [label="Primitive\n0"]
+"1" -> "118"
+"118" [label="ProcImpl"]
+"118" -> "119"
+"119" [label="SymName\n\"f\""]
+"118" -> "120"
+"120" [label="DeclImpl"]
+"120" -> "121"
+"121" [label="SymName\n\"ax\""]
+"120" -> "122"
+"122" [label="TInteger"]
+"118" -> "123"
+"123" [label="TBoolean"]
+"118" -> "124"
+"124" [label="ProcedureBlockImpl"]
+"124" -> "125"
+"125" [label="ProcImpl"]
+"125" -> "126"
+"126" [label="SymName\n\"nested\""]
+"125" -> "127"
+"127" [label="TBoolean"]
+"125" -> "128"
+"128" [label="ProcedureBlockImpl"]
+"128" -> "129"
+"129" [label="DeclImpl"]
+"129" -> "130"
+"130" [label="SymName\n\"i\""]
+"129" -> "131"
+"131" [label="SymName\n\"a\""]
+"129" -> "132"
+"132" [label="TInteger"]
+"128" -> "133"
+"133" [label="Return"]
+"133" -> "134"
+"134" [label="Compare"]
+"134" -> "135"
+"135" [label="Minus"]
+"135" -> "136"
+"136" [label="Ident"]
+"136" -> "137"
+"137" [label="SymName\n\"j\""]
+"135" -> "138"
+"138" [label="Ident"]
+"138" -> "139"
+"139" [label="SymName\n\"a\""]
+"134" -> "140"
+"140" [label="IntLit"]
+"140" -> "141"
+"141" [label="Primitive\n12"]
+"124" -> "142"
+"142" [label="DeclImpl"]
+"142" -> "143"
+"143" [label="SymName\n\"d\""]
+"142" -> "144"
+"144" [label="TBoolean"]
+"124" -> "145"
+"145" [label="Return"]
+"145" -> "146"
+"146" [label="Uminus"]
+"146" -> "147"
+"147" [label="Plus"]
+"147" -> "148"
+"148" [label="Uminus"]
+"148" -> "149"
+"149" [label="Uminus"]
+"149" -> "150"
+"150" [label="Uminus"]
+"150" -> "151"
+"151" [label="Ident"]
+"151" -> "152"
+"152" [label="SymName\n\"k\""]
+"147" -> "153"
+"153" [label="Div"]
+"153" -> "154"
+"154" [label="Times"]
+"154" -> "155"
+"155" [label="Ident"]
+"155" -> "156"
+"156" [label="SymName\n\"j\""]
+"154" -> "157"
+"157" [label="Ident"]
+"157" -> "158"
+"158" [label="SymName\n\"k\""]
+"153" -> "159"
+"159" [label="Ident"]
+"159" -> "160"
+"160" [label="SymName\n\"x\""]
+"1" -> "161"
+"161" [label="ProcImpl"]
+"161" -> "162"
+"162" [label="SymName\n\"main\""]
+"161" -> "163"
+"163" [label="DeclImpl"]
+"163" -> "164"
+"164" [label="SymName\n\"ax\""]
+"163" -> "165"
+"165" [label="TInteger"]
+"161" -> "166"
+"166" [label="TBoolean"]
+"161" -> "167"
+"167" [label="ProcedureBlockImpl"]
+"167" -> "168"
+"168" [label="ProcImpl"]
+"168" -> "169"
+"169" [label="SymName\n\"tain\""]
+"168" -> "170"
+"170" [label="DeclImpl"]
+"170" -> "171"
+"171" [label="SymName\n\"int\""]
+"170" -> "172"
+"172" [label="TInteger"]
+"168" -> "173"
+"173" [label="TBoolean"]
+"168" -> "174"
+"174" [label="ProcedureBlockImpl"]
+"174" -> "175"
+"175" [label="Return"]
+"175" -> "176"
+"176" [label="Or"]
+"176" -> "177"
+"177" [label="BoolLit"]
+"177" -> "178"
+"178" [label="Primitive\n0"]
+"176" -> "179"
+"179" [label="BoolLit"]
+"179" -> "180"
+"180" [label="Primitive\n1"]
+"167" -> "181"
+"181" [label="DeclImpl"]
+"181" -> "182"
+"182" [label="SymName\n\"i\""]
+"181" -> "183"
+"183" [label="TInteger"]
+"167" -> "184"
+"184" [label="Return"]
+"184" -> "185"
+"185" [label="Lt"]
+"185" -> "186"
+"186" [label="Plus"]
+"186" -> "187"
+"187" [label="IntLit"]
+"187" -> "188"
+"188" [label="Primitive\n2"]
+"186" -> "189"
+"189" [label="Times"]
+"189" -> "190"
+"190" [label="IntLit"]
+"190" -> "191"
+"191" [label="Primitive\n2"]
+"189" -> "192"
+"192" [label="IntLit"]
+"192" -> "193"
+"193" [label="Primitive\n4"]
+"185" -> "194"
+"194" [label="IntLit"]
+"194" -> "195"
+"195" [label="Primitive\n3"]
+"1" -> "196"
+"196" [label="ProcImpl"]
+"196" -> "197"
+"197" [label="SymName\n\"main1\""]
+"196" -> "198"
+"198" [label="DeclImpl"]
+"198" -> "199"
+"199" [label="SymName\n\"ax\""]
+"198" -> "200"
+"200" [label="TInteger"]
+"196" -> "201"
+"201" [label="TBoolean"]
+"196" -> "202"
+"202" [label="ProcedureBlockImpl"]
+"202" -> "203"
+"203" [label="DeclImpl"]
+"203" -> "204"
+"204" [label="SymName\n\"i\""]
+"203" -> "205"
+"205" [label="TInteger"]
+"202" -> "206"
+"206" [label="Return"]
+"206" -> "207"
+"207" [label="Lt"]
+"207" -> "208"
+"208" [label="Plus"]
+"208" -> "209"
+"209" [label="IntLit"]
+"209" -> "210"
+"210" [label="Primitive\n2"]
+"208" -> "211"
+"211" [label="Times"]
+"211" -> "212"
+"212" [label="IntLit"]
+"212" -> "213"
+"213" [label="Primitive\n2"]
+"211" -> "214"
+"214" [label="IntLit"]
+"214" -> "215"
+"215" [label="Primitive\n4"]
+"207" -> "216"
+"216" [label="IntLit"]
+"216" -> "217"
+"217" [label="Primitive\n3"]
 }

@@ -1,0 +1,112 @@
+% Midterm Project
+% Nick Ray
+
+function MidTerm
+	global redV blueV size color1 color2 red_position blue_position width length final_time
+	%width and length of the pool table
+	width = 800;
+	length = 400;
+
+	%position is given by a tuple
+	red_position = [50 50];
+	blue_position = [250 300];
+
+	%velocity is given by a tuple
+	%red ball has a horizontal velocity of 5
+	redV = [1 2];
+	redV(1) = 6;
+	redV(2) = 9;
+
+	%stationary blue ball
+	blueV = [3 0];
+	blueV(1) = 7;
+	blueV(2) = 3;
+
+	diameter = 50;
+	color1 ='red';
+	color2 ='blue';
+	figure(1)
+	drawcircle          
+
+
+function drawcircle   
+
+	global red_position redV blueV width length diameter color1 color2 blue_position 
+
+	%start at time zero
+	t = 0;
+	%time increment is 0.1
+	dt = 0.1;
+	%final time is givne to be 5 
+	final_time = 50;
+
+	radius = diameter/2
+	%
+	while t<final_time
+	    
+	    if t+dt>final_time
+	        dt = final_time-t;
+	    end
+	    
+	    if red_position(1)+radius>= width | red_position(1)-radius <=0
+	        redV(1) = -redV(1);
+	    end
+	    
+	    if red_position(2)+radius>= length | red_position(2)-radius<=0
+	        redV(2) = -redV(2);
+	    end
+	       
+	    
+	    if blue_position(1)+radius>= width | blue_position(1)-radius <=0
+	        blueV(1) = -blueV(1);
+	    end
+	    
+	    if blue_position(2)+radius>= length | blue_position(2)-radius<=0
+	        blueV(2) = -blueV(2);
+	    end
+	    
+	    red_position(1) = red_position(1) + redV(1);
+	    red_position(2) = red_position(2) + redV(2);
+	    
+	    blue_position(1) = blue_position(1) + blueV(1);
+	    blue_position(2) = blue_position(2) + blueV(2);
+	    
+	    X = [red_position(1) blue_position(1)];
+	    Y = [red_position(2) blue_position(2)];
+	    
+	    plot(X(1),Y(1),'rO','Markersize',diameter,'MarkerFaceColor',color1)
+	    hold on 
+	    plot(X(2),Y(2),'gO','Markersize',diameter,'MarkerFaceColor',color2)
+	    hold off
+	    axis([0, width, 0, length])
+	    drawnow
+	    
+	    
+	    
+	    if (sqrt( (blue_position(1)-red_position(1))^2 + (blue_position(2)-red_position(2))^2 ) <= radius*2)
+	            
+	            %Finding normal angle between two balls
+	            theta = atan2(blue_position(2)-red_position(2),blue_position(1)-red_position(1));
+	            
+	            %Transforming balls velocity to normal coordinate
+	            redV_n = (redV(1)*cos(theta))+(redV(2)*sin(theta));
+	            redV_t = (-redV(1)*sin(theta))+(redV(2)*cos(theta));
+	            
+	            blueV_n = (blueV(1)*cos(theta))+(blueV(2)*sin(theta));
+	            blueV_t = (-blueV(1)*sin(theta))+(blueV(2)*cos(theta));
+	            
+	            %Resolving colllision for normal axis
+	            %redV_F = redV_n+(2*blueV_n);
+	            %blueV_F = blueV_n+(2*redV_n);
+	            redV_F = blueV_n;
+	            blueV_F = redV_n;
+	            
+	            %Retransforming balls velocity to original coordinate
+	            redV(1) = (redV_F*cos(theta))-(redV_t*sin(theta));
+	            redV(2) = (redV_F*sin(theta))+(redV_t*cos(theta));
+	            blueV(1) = (blueV_F*cos(theta))-(blueV_t*sin(theta));
+	            blueV(2) = (blueV_F*sin(theta))+(blueV_t*cos(theta));
+	    end
+	    
+	    t = t + dt;
+	end

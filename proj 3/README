@@ -1,0 +1,5 @@
+In this project, I had to modify my existing grammar to incorporate building the AST. This involved double checking whether the push-back and push_front were appropriate for the line of grammar and making some additional changes so it flowed along with the AST's structure. 
+
+I also had to modify the string literal input to string the quotes around the string and a couple other minor changes for data input. Finally, I had to modify my grammar in subtle ways (confirming differences between LHS, expressions, assignments) so that it fit the parser AST file correctly. 
+
+I have also confirmed that the output is identical to that of the pdf files and ran my own testing to look for additional errors.
