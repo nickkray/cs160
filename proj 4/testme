@@ -4,7 +4,7 @@ procedure duck(x: char; k: char) return integer{
 	var m : charptr;
 	s[5] = '4';
 	m = &s[5];
-	q = m-4;
+	q = m+m;
 	k = ^q;
 	if(7==7){
 	}

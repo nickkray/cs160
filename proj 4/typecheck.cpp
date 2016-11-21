@@ -293,7 +293,7 @@ class Typecheck : public Visitor
     void checkset_arithexpr_or_pointer(Expr* parent, Expr* child1, Expr* child2)
     {
         default_rule(parent);
-        if(!((child1->m_attribute.m_basetype == bt_integer && child2->m_attribute.m_basetype == bt_integer) || (child1->m_attribute.m_basetype == bt_intptr && child2->m_attribute.m_basetype == bt_integer) || (child2->m_attribute.m_basetype == bt_integer && child1->m_attribute.m_basetype == bt_charptr) || (child2->m_attribute.m_basetype == bt_intptr && child1->m_attribute.m_basetype == bt_integer) || (child1->m_attribute.m_basetype == bt_integer && child2->m_attribute.m_basetype == bt_charptr)))
+        if(!((child1->m_attribute.m_basetype == bt_integer && child2->m_attribute.m_basetype == bt_integer) || (child1->m_attribute.m_basetype == bt_intptr && child2->m_attribute.m_basetype == bt_integer) || (child2->m_attribute.m_basetype == bt_integer && child1->m_attribute.m_basetype == bt_charptr)))
             this->t_error(expr_pointer_arithmetic_err, parent->m_attribute);
         if(child1->m_attribute.m_basetype == bt_intptr || child2->m_attribute.m_basetype == bt_intptr)
             parent->m_attribute.m_basetype=bt_intptr;
