@@ -1,0 +1,23 @@
+procedure duck(x: char; k: char) return integer{
+	var s: string[5];
+	var q : charptr;
+	var m : charptr;
+	s[5] = '4';
+	m = &s[5];
+	q = m-4;
+	k = ^q;
+	if(7==7){
+	}
+	while((5==5)==('a'=='a')){
+
+	}
+	return -5;
+}
+
+procedure Main() return integer{
+    var z: integer;
+    var t: char;
+
+    z = duck('b','a');
+    return z;
+}

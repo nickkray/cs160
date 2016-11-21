@@ -1,0 +1,120 @@
+procedure
+(){(){}}procedure
+(){var
+var
+()}hey we got hereaccepting a decl
+
+adding decl list
+accepting a decl
+
+adding decl list
+
+visiting proc_blockImpl
+
+setting our return to the right type1
+adding this 4
+adding this 4
+
+finished adding proc symbol
+
+visiting proc_blockImpl
+accepting a decl
+
+adding decl list
+accepting a decl
+
+adding decl list
+
+visiting variable
+comparing call 4 with 4
+comparing call 4 with 4
+
+setting our return to the right type1
+
+finished adding proc symbol
+digraph G { page="8.5,11"; size="7.5, 10"; 
+hey we got here"0" -> "1"
+"1" [label="ProgramImpl"]
+"1" -> "2"
+"2" [label="ProcImpl"]
+"2" -> "3"
+"3" [label="SymName\n\"duck\""]
+accepting a decl"2" -> "4"
+"4" [label="DeclImpl"]
+"4" -> "5"
+"5" [label="SymName\n\"x\""]
+"4" -> "6"
+"6" [label="TCharacter"]
+accepting a decl"2" -> "7"
+"7" [label="DeclImpl"]
+"7" -> "8"
+"8" [label="SymName\n\"k\""]
+"7" -> "9"
+"9" [label="TCharacter"]
+"2" -> "10"
+"10" [label="TInteger"]
+"2" -> "11"
+"11" [label="ProcedureBlockImpl"]
+"11" -> "12"
+"12" [label="IfNoElse"]
+"12" -> "13"
+"13" [label="Compare"]
+"13" -> "14"
+"14" [label="Ident"]
+"14" -> "15"
+"15" [label="SymName\n\"x\""]
+"13" -> "16"
+"16" [label="Ident"]
+"16" -> "17"
+"17" [label="SymName\n\"x\""]
+"12" -> "18"
+"18" [label="NestedBlockImpl"]
+"11" -> "19"
+"19" [label="Return"]
+"19" -> "20"
+"20" [label="IntLit"]
+"20" -> "21"
+"21" [label="Primitive\n5"]
+"1" -> "22"
+"22" [label="ProcImpl"]
+"22" -> "23"
+"23" [label="SymName\n\"Main\""]
+"22" -> "24"
+"24" [label="TInteger"]
+"22" -> "25"
+"25" [label="ProcedureBlockImpl"]
+accepting a decl"25" -> "26"
+"26" [label="DeclImpl"]
+"26" -> "27"
+"27" [label="SymName\n\"z\""]
+"26" -> "28"
+"28" [label="TInteger"]
+accepting a decl"25" -> "29"
+"29" [label="DeclImpl"]
+"29" -> "30"
+"30" [label="SymName\n\"t\""]
+"29" -> "31"
+"31" [label="TCharacter"]
+"25" -> "32"
+"32" [label="Call"]
+"32" -> "33"
+"33" [label="Variable"]
+"33" -> "34"
+"34" [label="SymName\n\"z\""]
+"32" -> "35"
+"35" [label="SymName\n\"duck\""]
+"32" -> "36"
+"36" [label="CharLit"]
+"36" -> "37"
+"37" [label="Primitive\n97"]
+"32" -> "38"
+"38" [label="CharLit"]
+"38" -> "39"
+"39" [label="Primitive\n97"]
+"25" -> "40"
+"40" [label="Return"]
+"40" -> "41"
+"41" [label="Ident"]
+"41" -> "42"
+"42" [label="SymName\n\"z\""]
+}

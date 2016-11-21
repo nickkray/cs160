@@ -50,7 +50,7 @@ extern int yylineno;
 		(*m_proc_list_iter)->accept( v );
 	}
  }
- void ProgramImpl::accept(Visitor *v) { v->visitProgramImpl(this); }
+void ProgramImpl::accept(Visitor *v) { printf("hey we got here");v->visitProgramImpl(this); }
  ProgramImpl *ProgramImpl::clone() const { return new ProgramImpl(*this); }
  
  
@@ -292,7 +292,7 @@ extern int yylineno;
  }
  void Nested_blockImpl::accept(Visitor *v) { v->visitNested_blockImpl(this); }
  Nested_blockImpl *Nested_blockImpl::clone() const { return new Nested_blockImpl(*this); }
- 
+
  
 /********* DeclImpl ************/
  DeclImpl::DeclImpl(std::list<SymName_ptr> *p1, Type *p2)  {
@@ -341,7 +341,7 @@ extern int yylineno;
 	}
 	m_type->accept( v );
   }
- void DeclImpl::accept(Visitor *v) { v->visitDeclImpl(this); }
+void DeclImpl::accept(Visitor *v) {         printf("accepting a decl");v->visitDeclImpl(this); }
  DeclImpl *DeclImpl::clone() const { return new DeclImpl(*this); }
  
  

@@ -1789,7 +1789,7 @@ yyreduce:
   case 27:
 #line 322 "parser.ypp"
     {
-    (yyval).u_stat = new Assignment(new DerefVariable(new SymName((yyvsp[(1) - (5)]).u_base_charptr)), (yyvsp[(4) - (5)]).u_expr)
+    (yyval).u_stat = new Assignment(new DerefVariable(new SymName((yyvsp[(2) - (5)]).u_base_charptr)), (yyvsp[(4) - (5)]).u_expr)
 ;}
     break;
 
@@ -2019,7 +2019,7 @@ yyreduce:
 
   case 69:
 #line 463 "parser.ypp"
-    {(yyval).u_expr=new IntLit(new Primitive((yyvsp[(1) - (1)]).u_base_int)); ;}
+    {(yyval).u_expr=new NullLit();;}
     break;
 
   case 70:

@@ -1,0 +1,42 @@
+procedure
+(){var
+}digraph G { page="8.5,11"; size="7.5, 10"; 
+"0" -> "1"
+"1" [label="ProgramImpl"]
+"1" -> "2"
+"2" [label="ProcImpl"]
+"2" -> "3"
+"3" [label="SymName\n\"main\""]
+this shit is being called (accepted)"2" -> "4"
+"4" [label="DeclImpl"]
+"4" -> "5"
+"5" [label="SymName\n\"y\""]
+"4" -> "6"
+"6" [label="TInteger"]
+"2" -> "7"
+"7" [label="TInteger"]
+"2" -> "8"
+"8" [label="ProcedureBlockImpl"]
+this shit is being called (accepted)"8" -> "9"
+"9" [label="DeclImpl"]
+"9" -> "10"
+"10" [label="SymName\n\"x\""]
+"9" -> "11"
+"11" [label="TInteger"]
+"8" -> "12"
+"12" [label="Assignment"]
+"12" -> "13"
+"13" [label="Variable"]
+"13" -> "14"
+"14" [label="SymName\n\"x\""]
+"12" -> "15"
+"15" [label="IntLit"]
+"15" -> "16"
+"16" [label="Primitive\n5"]
+"8" -> "17"
+"17" [label="Return"]
+"17" -> "18"
+"18" [label="IntLit"]
+"18" -> "19"
+"19" [label="Primitive\n5"]
+}

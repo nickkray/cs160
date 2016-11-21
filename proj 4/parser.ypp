@@ -320,7 +320,7 @@ Statement   :   VARNAME ArrayIndex EQ Expr SEMI_COLON
 }
 |   XOR VARNAME EQ Expr SEMI_COLON
 {
-    $$.u_stat = new Assignment(new DerefVariable(new SymName($1.u_base_charptr)), $4.u_expr)
+    $$.u_stat = new Assignment(new DerefVariable(new SymName($2.u_base_charptr)), $4.u_expr)
 }
 |   IF_WHILE
 
@@ -460,7 +460,7 @@ Value       :   VARNAME { $$.u_expr=new Ident(new SymName($1.u_base_charptr));}
 |   CHAR                {$$.u_expr=new CharLit(new Primitive($1.u_base_int)); }
 |   TRUE                {$$.u_expr=new BoolLit(new Primitive($1.u_base_int));}
 |   FALSE               {$$.u_expr=new BoolLit(new Primitive($1.u_base_int));}
-|   NULLTOKEN           {$$.u_expr=new IntLit(new Primitive($1.u_base_int)); }
+|   NULLTOKEN           {$$.u_expr=new NullLit();}
 |   XOR VARNAME         {$$.u_expr=new Deref(new Ident(new SymName($2.u_base_charptr)));}
 /*    |   VARNAME LEFT_PAREN FuncCall RIGHT_PAREN
  |   VARNAME LEFT_PAREN RIGHT_PAREN
