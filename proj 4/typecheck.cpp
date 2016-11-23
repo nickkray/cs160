@@ -149,12 +149,18 @@ class Typecheck : public Visitor
         s->m_basetype = bt_procedure;
         p->m_type->accept(this);
 
+
+        m_st->open_scope();
+
+
          std::list<Decl_ptr>::iterator m_decl_list_iter;
             for(m_decl_list_iter = p->m_decl_list->begin();
               m_decl_list_iter != p->m_decl_list->end();
               ++m_decl_list_iter){
                 (*m_decl_list_iter)->accept(this);
             }
+
+        m_st->close_scope();   
 
 
         s-> m_return_type = p -> m_type -> m_attribute.m_basetype;
@@ -168,6 +174,11 @@ class Typecheck : public Visitor
         
         if(!m_st->insert(strdup(p->m_symname->spelling()), s))
             this->t_error(dup_proc_name, p->m_attribute);
+
+        m_st->open_scope();
+
+        default_rule(p);
+        m_st->close_scope();   
     }
 
     // Add symbol table information for all the declarations following
@@ -471,9 +482,7 @@ s = new Symbol();
         */
 
         add_proc_symbol(p);
-        m_st->open_scope();
-        default_rule(p);
-        m_st->close_scope();   
+       
         check_proc(p);
 
     }
