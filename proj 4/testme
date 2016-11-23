@@ -1,23 +1,52 @@
 procedure duck(x: char; k: char) return integer{
+procedure tick2(y:charptr) return integer{
+			procedure tick2() return integer{
+				var x: integer;
+				return 5;
+			}
+		return 2;
+	}
 	var s: string[5];
 	var q : charptr;
 	var m : charptr;
+	var g: string [503434];
+		{
+		var s: char;
+		s ='c';
+	}
 	s[5] = '4';
 	m = &s[5];
-	q = m+m;
+	q = m+5;
 	k = ^q;
-	if(7==7){
+
+	if(null==null){
 	}
 	while((5==5)==('a'=='a')){
 
 	}
+	while(-5+1<4+6){
+		k = '5';
+		k='b';
+	}
+
 	return -5;
 }
 
+
 procedure Main() return integer{
+
+	procedure tick(y:charptr) return char{
+			procedure tick2() return char{
+				return 'a';
+			}
+		return 'a';
+	}
+	var Main: integer;
     var z: integer;
+    var r: charptr;
     var t: char;
 
     z = duck('b','a');
+    t = tick(r);
     return z;
 }

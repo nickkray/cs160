@@ -1,0 +1,7 @@
+procedure Main() return integer {
+  var ax: integer;
+  while(ax) {
+
+  }
+  return 1;
+}

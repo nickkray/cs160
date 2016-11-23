@@ -1,0 +1,7 @@
+procedure Main() return integer {
+  procedure a(x: boolean) return boolean {
+    return x;
+  }
+  var x: boolean;
+  return 1;
+}

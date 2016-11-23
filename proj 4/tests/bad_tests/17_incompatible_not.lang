@@ -1,0 +1,7 @@
+procedure Main() return integer {
+
+  var b: boolean;
+  b = !1;
+
+  return 1;
+}

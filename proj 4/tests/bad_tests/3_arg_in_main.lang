@@ -1,0 +1,4 @@
+procedure Main(ax: boolean) return integer
+{
+  return 1;
+}

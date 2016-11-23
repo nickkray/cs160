@@ -1,0 +1,13 @@
+procedure Main() return integer {
+  procedure a() return integer {
+    return 1;
+  }
+  return 1;
+}
+
+procedure b() return integer {
+  procedure a() return integer {
+    return 1;
+  }
+  return 1;
+}

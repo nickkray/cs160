@@ -167,7 +167,7 @@ ParameterListOrNot  :   TypedParamList
 |
 {
     $$.u_decl_list=new std::list<Decl_ptr>();
-    std::fprintf(stderr, "no parameter list.\n");
+    //std::fprintf(stderr, "no parameter list.\n");
 }
 ;
 
@@ -215,12 +215,12 @@ Return      :   RET Expr SEMI_COLON
 
 Structure   :   Procs VarDecs Statements Return
 {
-    std::fprintf(stderr, "Entering Proc structure.\n");
+    //std::fprintf(stderr, "Entering Proc structure.\n");
     $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list, $2.u_decl_list, $3.u_stat_list, $4.u_return_stat);
 }
 |   Procs VarDecs Return
 {
-    std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
+    //std::fprintf(stderr, "Entering Proc structure w/o statements.\n");
     $$.u_procedure_block = new Procedure_blockImpl($1.u_proc_list,$2.u_decl_list, new std::list<Stat_ptr>, $3.u_return_stat);
 }
 ;
@@ -233,7 +233,7 @@ Procs       :   Procs Proc
 |
 {
     $$.u_proc_list = new std::list<Proc_ptr>();
-    std::fprintf(stderr, "procedures done.\n");
+    //std::fprintf(stderr, "procedures done.\n");
 }
 ;
 
@@ -417,6 +417,7 @@ Expr        :   Value   {$$.u_expr = $1.u_expr;}
 |   Expr GT Expr    {$$.u_expr = new Gt($1.u_expr, $3.u_expr);}
 |   Expr LT Expr    {$$.u_expr = new Lt($1.u_expr, $3.u_expr);}
 |   Expr LTEQ Expr  {$$.u_expr = new Lteq($1.u_expr, $3.u_expr);}
+|   Expr GTEQ Expr  {$$.u_expr = new Gteq($1.u_expr, $3.u_expr);}
 |   Expr OR Expr    {$$.u_expr = new Or($1.u_expr, $3.u_expr);}
 |   Expr NE Expr    {$$.u_expr = new Noteq($1.u_expr, $3.u_expr);}
 |   Expr ANDAND Expr    {$$.u_expr = new And($1.u_expr, $3.u_expr);}

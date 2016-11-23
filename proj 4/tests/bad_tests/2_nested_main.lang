@@ -1,0 +1,8 @@
+procedure m() return integer
+{
+  procedure Main() return integer {
+
+    return 1;
+  }
+  return 1;
+}

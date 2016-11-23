@@ -1,0 +1,10 @@
+procedure c(a: boolean) return integer {
+
+  return 1;
+}
+
+procedure Main() return integer {
+  var y: integer;
+  y = c(1);
+  return 1;
+}

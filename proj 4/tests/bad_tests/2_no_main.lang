@@ -1,0 +1,4 @@
+procedure m() return integer
+{
+  return 1;
+}

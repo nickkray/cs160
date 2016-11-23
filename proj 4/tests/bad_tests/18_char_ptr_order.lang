@@ -1,0 +1,8 @@
+procedure Main() return integer {
+
+  var a: charptr;
+
+  a = 1+a;
+
+  return 1;
+}

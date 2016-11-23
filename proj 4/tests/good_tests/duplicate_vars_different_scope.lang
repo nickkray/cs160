@@ -1,0 +1,11 @@
+procedure Main() return integer
+{
+  var ax: boolean;
+  return 1;
+}
+
+procedure b() return integer
+{
+  var ax: boolean;
+  return 1;
+}

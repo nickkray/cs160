@@ -1,0 +1,9 @@
+procedure Main() return integer {
+  var ax: string[10];
+  var a: char;
+
+  a = ax[true];
+
+  /% ax[true] = 'a'; %/
+  return 1;
+}

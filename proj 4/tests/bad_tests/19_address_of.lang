@@ -1,0 +1,9 @@
+procedure Main() return integer {
+
+  var a: string[20];
+  var c: char;
+  var b: charptr;
+  b = &b;
+
+  return 1;
+}

@@ -1,0 +1,6 @@
+procedure Main() return integer {
+  var x: boolean;
+  var y: boolean;
+  x = y();
+  return 1;
+}

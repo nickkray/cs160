@@ -1,0 +1,19 @@
+procedure a() return integer
+{
+  return 1;
+}
+
+procedure b() return integer
+{
+
+  procedure a() return integer
+  {
+    return 0;
+  }
+
+  return 1;
+}
+
+procedure Main() return integer{
+  return 1;
+}

@@ -1,0 +1,14 @@
+procedure Main() return integer {
+  var s: string[20];
+  var x: charptr;
+  var c: char;
+  var z, w, v: integer;
+  x = x + z * (w+v+4);
+
+  c = ^(x+1);
+  s[z] = ^(&s[1]+1);
+  ^x = c;
+
+  return 1;
+}
+

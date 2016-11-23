@@ -148,28 +148,28 @@ class Typecheck : public Visitor
         s = new Symbol();
         s->m_basetype = bt_procedure;
         s-> m_return_type = p -> m_type -> m_attribute.m_basetype;
-
+        
         list<Decl_ptr>::iterator iter;        
         for(iter = p->m_decl_list -> begin(); iter != p->m_decl_list -> end(); ++iter){
             s->m_arg_type.push_back((**iter).m_attribute.m_basetype);
-            cout << "adding this "<< (**iter).m_attribute.m_basetype <<endl;
+            //cout << "adding this "<< (**iter).m_attribute.m_basetype <<endl;
         }
         
         if(!m_st->insert(strdup(p->m_symname->spelling()), s))
-            this->t_error(dup_var_name, p->m_attribute);
+            this->t_error(dup_proc_name, p->m_attribute);
     }
 
     // Add symbol table information for all the declarations following
     void add_decl_symbol(DeclImpl* p)
     {
-        cout << "\n\nadding decl list\n";
+        //cout << "\n\nadding decl list\n";
         list<SymName_ptr>::iterator iter;
         char* name;
         Symbol *s;
         
         for(iter = p->m_symname_list -> begin(); iter != p->m_symname_list -> end(); ++iter){
             name = strdup((*iter)->spelling());
-            cout << "adding "<<name << endl;
+            //cout << "adding "<<name << endl;
             s = new Symbol();
             s->m_basetype = p->m_type->m_attribute.m_basetype;
             
@@ -197,7 +197,7 @@ class Typecheck : public Visitor
     {
         default_rule(p);
         Symbol *s = m_st->lookup(p->m_symname->spelling());
-        if(s == NULL)       //function doesnt exist
+        if(s == NULL || s->m_basetype != bt_procedure)       //function doesnt exist
             this->t_error(proc_undef, p->m_attribute);
         if(p->m_lhs->m_attribute.m_basetype != s->m_return_type)    //incompat assign
             this->t_error(incompat_assign, p->m_attribute);
@@ -208,7 +208,7 @@ class Typecheck : public Visitor
         std::vector<Basetype>::iterator iter2 = s->m_arg_type.end();
         --iter2;
         for(auto iter = p->m_expr_list -> begin(); iter != p->m_expr_list -> end(); ++iter){   
-            cout << "comparing call "<<*iter2<< " with "<< (**iter).m_attribute.m_basetype<< endl;
+            //cout << "comparing call "<<*iter2<< " with "<< (**iter).m_attribute.m_basetype<< endl;
             if(*iter2!=(**iter).m_attribute.m_basetype)
                 this->t_error(arg_type_mismatch, p->m_attribute);
             --iter2;
@@ -233,10 +233,10 @@ class Typecheck : public Visitor
 
     void check_assignment(Assignment* p)    //check that types match
     {
-        cout << "checking assignment ";
+        //cout << "checking assignment ";
         default_rule(p);
         //can also assign null to any pointer
-        cout << "performing assignment lhs: " <<  p->m_lhs->m_attribute.m_basetype << " with rhs: " << p->m_expr->m_attribute.m_basetype << endl;
+        //cout << "performing assignment lhs: " <<  p->m_lhs->m_attribute.m_basetype << " with rhs: " << p->m_expr->m_attribute.m_basetype << endl;
         if( !((p -> m_expr -> m_attribute.m_basetype == p->m_lhs->m_attribute.m_basetype) || (p -> m_expr -> m_attribute.m_basetype == bt_ptr && (p->m_lhs->m_attribute.m_basetype == bt_charptr || p->m_lhs->m_attribute.m_basetype == bt_intptr))))
             this-> t_error(incompat_assign, p->m_attribute);
     }
@@ -264,6 +264,8 @@ class Typecheck : public Visitor
         Symbol *s = m_st->lookup(p->m_symname->spelling());
         if(s == NULL)       //var doesnt exit
             this->t_error(proc_undef, p->m_attribute);
+        if(s->m_basetype != bt_string)
+            this->t_error(no_array_var, p->m_attribute);
         if(p->m_expr->m_attribute.m_basetype != bt_integer)
             this->t_error(array_index_error, p->m_attribute);
         p->m_attribute.m_basetype = bt_char;
@@ -283,6 +285,8 @@ class Typecheck : public Visitor
     void checkset_arithexpr(Expr* parent, Expr* child1, Expr* child2)
     {
         default_rule(parent);
+        if(child1->m_attribute.m_basetype == bt_intptr || child2->m_attribute.m_basetype == bt_intptr || child1->m_attribute.m_basetype == bt_charptr || child2->m_attribute.m_basetype == bt_charptr)  //no int ptr arithmetic
+            this->t_error(expr_pointer_arithmetic_err, parent->m_attribute);
          if(     child1->m_attribute.m_basetype != bt_integer 
              || child2->m_attribute.m_basetype != bt_integer )
             this->t_error(expr_type_err, parent->m_attribute);
@@ -293,14 +297,20 @@ class Typecheck : public Visitor
     void checkset_arithexpr_or_pointer(Expr* parent, Expr* child1, Expr* child2)
     {
         default_rule(parent);
+        /*
         if(!((child1->m_attribute.m_basetype == bt_integer && child2->m_attribute.m_basetype == bt_integer) || (child1->m_attribute.m_basetype == bt_intptr && child2->m_attribute.m_basetype == bt_integer) || (child2->m_attribute.m_basetype == bt_integer && child1->m_attribute.m_basetype == bt_charptr)))
             this->t_error(expr_pointer_arithmetic_err, parent->m_attribute);
-        if(child1->m_attribute.m_basetype == bt_intptr || child2->m_attribute.m_basetype == bt_intptr)
-            parent->m_attribute.m_basetype=bt_intptr;
-        if(child1->m_attribute.m_basetype == bt_charptr || child2->m_attribute.m_basetype == bt_charptr)
-            parent->m_attribute.m_basetype=bt_charptr;
+            */
+        if(child1->m_attribute.m_basetype == bt_intptr || child2->m_attribute.m_basetype == bt_intptr)  //no int ptr arithmetic
+            this->t_error(expr_pointer_arithmetic_err, parent->m_attribute);
+        if(child1->m_attribute.m_basetype == bt_charptr && child2->m_attribute.m_basetype == bt_charptr)    //can't be 2 char ptrs
+            this->t_error(expr_pointer_arithmetic_err, parent->m_attribute);
+        if(child1->m_attribute.m_basetype == bt_integer && child2->m_attribute.m_basetype == bt_charptr)// can't do int+charptr
+            this->t_error(expr_pointer_arithmetic_err, parent->m_attribute);
         if(child1->m_attribute.m_basetype == bt_integer && child2->m_attribute.m_basetype == bt_integer)
             parent->m_attribute.m_basetype=bt_integer;
+        if(child1->m_attribute.m_basetype == bt_charptr && child2->m_attribute.m_basetype == bt_integer)
+            parent->m_attribute.m_basetype=bt_charptr;
 
     }
 
@@ -318,7 +328,7 @@ class Typecheck : public Visitor
     void checkset_equalityexpr(Expr* parent, Expr* child1, Expr* child2)
     {
         default_rule(parent);
-        if(child1->m_attribute.m_basetype!=child2->m_attribute.m_basetype)
+        if(child1->m_attribute.m_basetype!=child2->m_attribute.m_basetype || child1->m_attribute.m_basetype == bt_string)
                   this->t_error(expr_type_err, parent->m_attribute);
         parent->m_attribute.m_basetype=bt_boolean;
     }
@@ -362,7 +372,7 @@ class Typecheck : public Visitor
 
     void checkset_deref_expr(Deref* parent,Expr* child)
     {
-        cout << "checking deref expr"<<endl;
+        //cout << "checking deref expr"<<endl;
         default_rule(parent);
         if(!(child->m_attribute.m_basetype== bt_intptr || child->m_attribute.m_basetype== bt_charptr))
             this -> t_error(invalid_deref, parent -> m_attribute);
@@ -386,7 +396,7 @@ if(!((s->m_attribute.m_basetype== bt_intptr && child->m_attribute.m_basetype == 
     {
         default_rule(p);
         Symbol* s = m_st -> lookup(p->m_symname->spelling());
-        cout << "symbol lookup"<<endl;
+        //cout << "symbol lookup"<<endl;
         if(s == NULL)  //defined
             this -> t_error(var_undef, p -> m_attribute);
         if(!(s->m_basetype== bt_intptr || s->m_basetype== bt_charptr)) //address of is a pointer
@@ -421,10 +431,15 @@ if(!((s->m_attribute.m_basetype== bt_intptr && child->m_attribute.m_basetype == 
 
     void visitProcImpl(ProcImpl* p)
     {
+        
+        m_st->open_scope();
         default_rule(p);
-        add_proc_symbol(p);
-        cout << "\nfinished adding proc symbol\n";
+        m_st->close_scope(); 
+add_proc_symbol(p);
+        
+        //cout << "\nfinished adding proc symbol\n";
         check_proc(p);
+
     }
 
     void visitCall(Call* p)
@@ -435,16 +450,19 @@ if(!((s->m_attribute.m_basetype== bt_intptr && child->m_attribute.m_basetype == 
 
     void visitNested_blockImpl(Nested_blockImpl* p)
     {
-        default_rule(p);   
+        m_st->open_scope();
+        default_rule(p);  
+        m_st->close_scope(); 
     }
 
     void visitProcedure_blockImpl(Procedure_blockImpl* p)
     {
-        cout << "\nvisiting proc_blockImpl\n";
+        //m_st->open_scope();   since nested block is called already
+        //cout << "\nvisiting proc_blockImpl\n";
         default_rule(p);
-        cout << "\nsetting our return to the right type"<<p->m_return_stat->m_attribute.m_basetype<<"\n";
+        //cout << "\nsetting our return to the right type"<<p->m_return_stat->m_attribute.m_basetype<<"\n";
         p->m_attribute.m_basetype = p->m_return_stat->m_attribute.m_basetype;
-
+        //m_st->close_scope(); 
     }
 
     void visitDeclImpl(DeclImpl* p)

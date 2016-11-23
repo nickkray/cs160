@@ -1,0 +1,8 @@
+procedure Main() return integer {
+  var a: char;
+
+  a[1] = a;
+
+  /% a = a[1] %/
+  return 1;
+}

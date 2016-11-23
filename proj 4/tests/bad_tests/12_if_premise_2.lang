@@ -1,0 +1,9 @@
+procedure Main() return integer {
+  var ax: integer;
+  if(ax) {
+
+  } else {
+  
+  }
+  return 1;
+}

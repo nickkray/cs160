@@ -1,0 +1,14 @@
+procedure Main() return integer {
+  var a: integer;
+  a = Main();
+
+  if(a == 1){
+    var b: integer;
+    a = 2;
+  }
+  {
+    var b: integer;
+    a = 1;
+  }
+  return 1;
+}

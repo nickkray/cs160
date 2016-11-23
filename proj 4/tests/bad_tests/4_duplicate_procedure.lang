@@ -1,0 +1,13 @@
+procedure a() return integer
+{
+  return 1;
+}
+
+procedure a() return integer
+{
+  return 1;
+}
+
+procedure Main() return integer{
+  return 1;
+}

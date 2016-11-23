@@ -1,0 +1,5 @@
+procedure Main() return integer {
+  var x: boolean;
+  x = foo();
+  return 1;
+}

@@ -1,0 +1,10 @@
+procedure Main() return integer {
+
+  var a: string[1];
+  var b: string[1];
+  var c: boolean;
+
+  c = a == b;
+
+  return 1;
+}
