@@ -148,13 +148,22 @@ class Typecheck : public Visitor
         s = new Symbol();
         s->m_basetype = bt_procedure;
         p->m_type->accept(this);
+
+         std::list<Decl_ptr>::iterator m_decl_list_iter;
+            for(m_decl_list_iter = p->m_decl_list->begin();
+              m_decl_list_iter != p->m_decl_list->end();
+              ++m_decl_list_iter){
+                (*m_decl_list_iter)->accept(this);
+            }
+
+
         s-> m_return_type = p -> m_type -> m_attribute.m_basetype;
 
 
         list<Decl_ptr>::iterator iter;        
         for(iter = p->m_decl_list -> begin(); iter != p->m_decl_list -> end(); ++iter){
             s->m_arg_type.push_back((**iter).m_attribute.m_basetype);
-            //cout << "adding this "<< (**iter).m_attribute.m_basetype <<endl;
+            cout << "adding this "<< (**iter).m_attribute.m_basetype <<endl;
         }
         
         if(!m_st->insert(strdup(p->m_symname->spelling()), s))
@@ -174,6 +183,10 @@ class Typecheck : public Visitor
             //cout << "adding "<<name << endl;
             s = new Symbol();
             s->m_basetype = p->m_type->m_attribute.m_basetype;
+
+
+      //      if(s->m_basetype == bt_string)
+       //         s->m_string_size = p->m_type->m_primitive->m_data;
             
             if(!m_st->insert(name, s))
                 this->t_error(dup_var_name, p->m_attribute);
@@ -563,8 +576,15 @@ s = new Symbol();
 
     void visitTString(TString* p)
     {
+
         default_rule(p);
         p->m_attribute.m_basetype = bt_string;
+        if(p->m_primitive->m_data<1){
+            cout << "string length less than 1";
+            exit(21);
+        }
+        //cout << "it's len is " << p->m_primitive->m_data<<endl;
+
     }
 
     void visitTCharPtr(TCharPtr* p)

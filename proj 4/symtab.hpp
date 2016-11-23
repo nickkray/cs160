@@ -66,6 +66,7 @@ class Symbol
     Basetype m_return_type;
 
     //WRITEME: add string size information
+    int m_string_size;
 
     Symbol()
     {
