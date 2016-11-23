@@ -147,8 +147,10 @@ class Typecheck : public Visitor
         Symbol *arg;
         s = new Symbol();
         s->m_basetype = bt_procedure;
+        p->m_type->accept(this);
         s-> m_return_type = p -> m_type -> m_attribute.m_basetype;
-        
+
+
         list<Decl_ptr>::iterator iter;        
         for(iter = p->m_decl_list -> begin(); iter != p->m_decl_list -> end(); ++iter){
             s->m_arg_type.push_back((**iter).m_attribute.m_basetype);
@@ -431,13 +433,34 @@ if(!((s->m_attribute.m_basetype== bt_intptr && child->m_attribute.m_basetype == 
 
     void visitProcImpl(ProcImpl* p)
     {
-        
+
+        /*
+Symbol *s;
+s = new Symbol();
+        s->m_basetype = bt_procedure;
+        if(!m_st->insert(strdup(p->m_symname->spelling()), s))
+            this->t_error(dup_proc_name, p->m_attribute);
+
+        p->m_type->accept(this);
+        s-> m_return_type = p -> m_type -> m_attribute.m_basetype;
+//        cout << "what is the type pre("<< p->m_symname->spelling() <<"): "<< p -> m_type -> m_attribute.m_basetype << endl;
+
         m_st->open_scope();
         default_rule(p);
         m_st->close_scope(); 
-add_proc_symbol(p);
-        
-        //cout << "\nfinished adding proc symbol\n";
+
+      //  cout << "what is the type post("<< p->m_symname->spelling() <<"): "<< p -> m_type -> m_attribute.m_basetype << endl;
+
+
+
+//add_proc_symbol(p);        
+        check_proc(p);
+        */
+
+        add_proc_symbol(p);
+        m_st->open_scope();
+        default_rule(p);
+        m_st->close_scope();   
         check_proc(p);
 
     }
