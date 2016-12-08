@@ -1,0 +1,11 @@
+	procedure Main() return integer {
+		var x, y, z : integer;
+
+		x = 999;
+		y = 900;
+		z = - 1;
+
+		x = (x - y) * z;
+
+		return x;
+	}
